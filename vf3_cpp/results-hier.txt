@@ -1,0 +1,418 @@
+===============================
+DESIGN: S349
+SOURCE: examples/hier/S349.sp
+===============================
+Parsing source:  examples/hier/S349.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s349 (512 FETs)
+  OR2X1: 6 instances
+  NOR2X1: 34 instances
+  NAND2X1: 51 instances
+  INVX1: 29 instances
+  AND2X1: 13 instances
+  Coverage: 512/512 (100.0%)  Time: 0.447 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.001531 s
+Instances:  133
+Coverage:   512/512 (100.00%)
+Memory:     10700 KB (11 MB) peak RSS
+Output:     output/hier/S349.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S386
+SOURCE: examples/hier/S386.sp
+===============================
+Parsing source:  examples/hier/S386.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s386 (518 FETs)
+  OR2X1: 1 instances
+  AND2X1: 3 instances
+  NOR2X1: 57 instances
+  NAND2X1: 54 instances
+  INVX1: 25 instances
+  Coverage: 518/518 (100.0%)  Time: 0.418 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.001383 s
+Instances:  140
+Coverage:   518/518 (100.00%)
+Memory:     10832 KB (11 MB) peak RSS
+Output:     output/hier/S386.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S400
+SOURCE: examples/hier/S400.sp
+===============================
+Parsing source:  examples/hier/S400.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s400 (586 FETs)
+  OR2X1: 2 instances
+  XOR2X1: 10 instances
+  NOR2X1: 45 instances
+  NAND2X1: 41 instances
+  INVX1: 19 instances
+  AND2X1: 12 instances
+  Coverage: 586/586 (100.0%)  Time: 0.402 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.001367 s
+Instances:  129
+Coverage:   586/586 (100.00%)
+Memory:     10600 KB (11 MB) peak RSS
+Output:     output/hier/S400.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S420
+SOURCE: examples/hier/S420.sp
+===============================
+Parsing source:  examples/hier/S420.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s420 (568 FETs)
+  XOR2X1: 2 instances
+  NOR2X1: 58 instances
+  OR2X1: 12 instances
+  NAND2X1: 29 instances
+  INVX1: 23 instances
+  AND2X1: 13 instances
+  Coverage: 568/568 (100.0%)  Time: 0.399 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.001401 s
+Instances:  137
+Coverage:   568/568 (100.00%)
+Memory:     10696 KB (11 MB) peak RSS
+Output:     output/hier/S420.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S510
+SOURCE: examples/hier/S510.sp
+===============================
+Parsing source:  examples/hier/S510.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s510 (978 FETs)
+  AND2X1: 4 instances
+  OR2X1: 5 instances
+  NOR2X1: 104 instances
+  NAND2X1: 111 instances
+  INVX1: 32 instances
+  Coverage: 978/978 (100.0%)  Time: 0.687 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.001669 s
+Instances:  256
+Coverage:   978/978 (100.00%)
+Memory:     10976 KB (11 MB) peak RSS
+Output:     output/hier/S510.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S526
+SOURCE: examples/hier/S526.sp
+===============================
+Parsing source:  examples/hier/S526.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s526 (732 FETs)
+  XOR2X1: 2 instances
+  OR2X1: 5 instances
+  NOR2X1: 53 instances
+  NAND2X1: 82 instances
+  INVX1: 27 instances
+  AND2X1: 14 instances
+  Coverage: 732/732 (100.0%)  Time: 0.516 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.001482 s
+Instances:  183
+Coverage:   732/732 (100.00%)
+Memory:     10896 KB (11 MB) peak RSS
+Output:     output/hier/S526.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S838
+SOURCE: examples/hier/S838.sp
+===============================
+Parsing source:  examples/hier/S838.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s838 (1156 FETs)
+  XOR2X1: 2 instances
+  NOR2X1: 115 instances
+  OR2X1: 26 instances
+  NAND2X1: 68 instances
+  INVX1: 50 instances
+  AND2X1: 24 instances
+  Coverage: 1156/1156 (100.0%)  Time: 0.667 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.001704 s
+Instances:  285
+Coverage:   1156/1156 (100.00%)
+Memory:     11144 KB (11 MB) peak RSS
+Output:     output/hier/S838.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S953
+SOURCE: examples/hier/S953.sp
+===============================
+Parsing source:  examples/hier/S953.sp
+Warning: -c 's953' not found in source; falling back to largest subckt.
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s838 (1146 FETs)
+  XOR2X1: 2 instances
+  NOR2X1: 96 instances
+  OR2X1: 25 instances
+  NAND2X1: 86 instances
+  INVX1: 50 instances
+  AND2X1: 24 instances
+  Coverage: 1146/1146 (100.0%)  Time: 0.885 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.002052 s
+Instances:  283
+Coverage:   1146/1146 (100.00%)
+Memory:     11032 KB (11 MB) peak RSS
+Output:     output/hier/S953.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S1196
+SOURCE: examples/hier/S1196.sp
+===============================
+Parsing source:  examples/hier/S1196.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s1196 (2134 FETs)
+  XOR2X1: 5 instances
+  OR2X1: 7 instances
+  NOR2X1: 239 instances
+  NAND2X1: 202 instances
+  INVX1: 59 instances
+  AND2X1: 25 instances
+  Coverage: 2134/2134 (100.0%)  Time: 1.352 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.002567 s
+Instances:  537
+Coverage:   2134/2134 (100.00%)
+Memory:     11572 KB (12 MB) peak RSS
+Output:     output/hier/S1196.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S1423
+SOURCE: examples/hier/S1423.sp
+===============================
+Parsing source:  examples/hier/S1423.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s1423 (2296 FETs)
+  XOR2X1: 33 instances
+  NOR2X1: 104 instances
+  NAND2X1: 167 instances
+  INVX1: 66 instances
+  AND2X1: 98 instances
+  OR2X1: 16 instances
+  Coverage: 2296/2296 (100.0%)  Time: 1.590 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.002658 s
+Instances:  484
+Coverage:   2296/2296 (100.00%)
+Memory:     11744 KB (12 MB) peak RSS
+Output:     output/hier/S1423.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S1488
+SOURCE: examples/hier/S1488.sp
+===============================
+Parsing source:  examples/hier/S1488.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s1488 (2368 FETs)
+  XOR2X1: 1 instances
+  OR2X1: 8 instances
+  NOR2X1: 259 instances
+  INVX1: 48 instances
+  NAND2X1: 270 instances
+  AND2X1: 16 instances
+  Coverage: 2368/2368 (100.0%)  Time: 1.457 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.002600 s
+Instances:  602
+Coverage:   2368/2368 (100.00%)
+Memory:     11796 KB (12 MB) peak RSS
+Output:     output/hier/S1488.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S13207
+SOURCE: examples/hier/S13207.sp
+===============================
+Parsing source:  examples/hier/S13207.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s13207 (10888 FETs)
+  AND2X1: 110 instances
+  NOR2X1: 533 instances
+  XOR2X1: 125 instances
+  OR2X1: 169 instances
+  NAND2X1: 943 instances
+  INVX1: 905 instances
+  Coverage: 10888/10888 (100.0%)  Time: 6.009 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.007652 s
+Instances:  2785
+Coverage:   10888/10888 (100.00%)
+Memory:     17316 KB (17 MB) peak RSS
+Output:     output/hier/S13207.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S15850
+SOURCE: examples/hier/S15850.sp
+===============================
+Parsing source:  examples/hier/S15850.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s15850 (13598 FETs)
+  AND2X1: 110 instances
+  XOR2X1: 158 instances
+  NOR2X1: 730 instances
+  NAND2X1: 1262 instances
+  INVX1: 859 instances
+  OR2X1: 226 instances
+  Coverage: 13598/13598 (100.0%)  Time: 6.558 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.008287 s
+Instances:  3345
+Coverage:   13598/13598 (100.00%)
+Memory:     18772 KB (19 MB) peak RSS
+Output:     output/hier/S15850.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S38417
+SOURCE: examples/hier/S38417.sp
+===============================
+Parsing source:  examples/hier/S38417.sp
+
+=== EXTRACTION START ===
+
+Library gates:  575
+Source subckts: 1
+
+Processing: s38417 (40414 FETs)
+  AND2X1: 330 instances
+  NOR2X1: 2089 instances
+  OR2X1: 500 instances
+  XOR2X1: 350 instances
+  NAND2X1: 4434 instances
+  INVX1: 2571 instances
+  Coverage: 40414/40414 (100.0%)  Time: 20.132 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.023061 s
+Instances:  10274
+Coverage:   40414/40414 (100.00%)
+Memory:     35888 KB (36 MB) peak RSS
+Output:     output/hier/S38417.v
+
+=== EXTRACTION COMPLETE ===
+
+

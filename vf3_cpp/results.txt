@@ -1,0 +1,1579 @@
+===============================
+DESIGN: S349
+LIB: examples/lib/libs349.sp
+TEST: examples/test/S349.sp
+===============================
+[TIMING] qg_cache=0.1ms (20 gates, lazy)
+Parsing library: examples/lib/libs349.sp
+Parsing source:  examples/test/S349.sp
+
+=== EXTRACTION START ===
+
+Library gates:  20
+Source subckts: 1
+
+Processing: s349 (412 FETs)
+  [Prefix pre-pass] matched 236 FETs
+  [Net-group pass]  matched 172 FETs
+  Pass 1 -> +4 FETs matched
+  AOI32D0BWP: 2 instances (0.00 ms)
+  MUX2ND0BWP: 9 instances (0.00 ms)
+  OAI211D0BWP: 1 instances (0.00 ms)
+  AOI22D0BWP: 2 instances (0.00 ms)
+  OAI22D0BWP: 4 instances (0.00 ms)
+  IAO21D0BWP: 2 instances (0.00 ms)
+  IND3D0BWP: 1 instances (0.00 ms)
+  AOI21D0BWP: 1 instances (0.00 ms)
+  OAI21D0BWP: 1 instances (0.00 ms)
+  ND3D0BWP: 3 instances (0.00 ms)
+  NR3D0BWP: 1 instances (0.00 ms)
+  AN2D0BWP: 10 instances (0.00 ms)
+  OR2D0BWP: 5 instances (0.00 ms)
+  INR2D0BWP: 1 instances (0.00 ms)
+  CKND2D0BWP: 9 instances (0.02 ms)
+  NR2D0BWP: 3 instances (0.00 ms)
+  CKND0BWP: 21 instances (0.00 ms)
+  Coverage: 412/412 (100.0%)  Time: 4.884 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.004922 s
+Instances:  76
+Coverage:   412/412 (100.00%)
+Memory:     4864 KB (5 MB) peak RSS
+Output:     output/flat/S349.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S386
+LIB: examples/lib/libs386.sp
+TEST: examples/test/S386.sp
+===============================
+[TIMING] qg_cache=0.1ms (21 gates, lazy)
+Parsing library: examples/lib/libs386.sp
+Parsing source:  examples/test/S386.sp
+
+=== EXTRACTION START ===
+
+Library gates:  21
+Source subckts: 1
+
+Processing: s386 (402 FETs)
+  [Prefix pre-pass] matched 94 FETs
+  [Net-group pass]  matched 308 FETs
+  OAI221D0BWP: 1 instances (0.00 ms)
+  AOI32D0BWP: 2 instances (0.00 ms)
+  OAI32D0BWP: 1 instances (0.00 ms)
+  MUX2ND0BWP: 4 instances (0.00 ms)
+  AOI31D0BWP: 2 instances (0.00 ms)
+  OAI211D0BWP: 3 instances (0.00 ms)
+  OAI31D0BWP: 2 instances (0.00 ms)
+  AOI22D0BWP: 1 instances (0.00 ms)
+  OAI22D0BWP: 2 instances (0.00 ms)
+  ND4D0BWP: 1 instances (0.00 ms)
+  NR4D0BWP: 4 instances (0.00 ms)
+  INR3D0BWP: 1 instances (0.00 ms)
+  AOI21D0BWP: 3 instances (0.00 ms)
+  OAI21D0BWP: 3 instances (0.00 ms)
+  ND3D0BWP: 1 instances (0.00 ms)
+  NR3D0BWP: 4 instances (0.00 ms)
+  IND2D0BWP: 1 instances (0.00 ms)
+  CKND2D0BWP: 10 instances (0.00 ms)
+  NR2D0BWP: 8 instances (0.00 ms)
+  CKND0BWP: 25 instances (0.00 ms)
+  Coverage: 402/402 (100.0%)  Time: 11.325 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.011367 s
+Instances:  79
+Coverage:   402/402 (100.00%)
+Memory:     4992 KB (5 MB) peak RSS
+Output:     output/flat/S386.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S400
+LIB: examples/lib/libs400.sp
+TEST: examples/test/S400.sp
+===============================
+[TIMING] qg_cache=0.1ms (23 gates, lazy)
+Parsing library: examples/lib/libs400.sp
+Parsing source:  examples/test/S400.sp
+
+=== EXTRACTION START ===
+
+Library gates:  23
+Source subckts: 1
+
+Processing: s400 (510 FETs)
+  [Prefix pre-pass] matched 262 FETs
+  [Net-group pass]  matched 248 FETs
+  CKXOR2D0BWP: 7 instances (0.00 ms)
+  XNR2D0BWP: 1 instances (0.00 ms)
+  AN4D1BWP: 1 instances (0.00 ms)
+  OR4D0BWP: 1 instances (0.00 ms)
+  AOI211D0BWP: 1 instances (0.00 ms)
+  AOI31D0BWP: 2 instances (0.00 ms)
+  OAI211D0BWP: 2 instances (0.00 ms)
+  OAI31D0BWP: 2 instances (0.00 ms)
+  NR4D0BWP: 2 instances (0.00 ms)
+  AN3D0BWP: 15 instances (0.00 ms)
+  AOI21D0BWP: 6 instances (0.00 ms)
+  OAI21D0BWP: 1 instances (0.00 ms)
+  ND3D0BWP: 3 instances (0.00 ms)
+  AN2XD1BWP: 6 instances (0.00 ms)
+  OR2D0BWP: 2 instances (0.00 ms)
+  IND2D0BWP: 1 instances (0.00 ms)
+  INR2D0BWP: 1 instances (0.00 ms)
+  CKND2D0BWP: 9 instances (0.00 ms)
+  NR2D0BWP: 5 instances (0.00 ms)
+  CKND0BWP: 13 instances (0.00 ms)
+  Coverage: 510/510 (100.0%)  Time: 9.740 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.009768 s
+Instances:  81
+Coverage:   510/510 (100.00%)
+Memory:     4992 KB (5 MB) peak RSS
+Output:     output/flat/S400.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S420
+LIB: examples/lib/libs420.sp
+TEST: examples/test/S420.sp
+===============================
+[TIMING] qg_cache=0.1ms (18 gates, lazy)
+Parsing library: examples/lib/libs420.sp
+Parsing source:  examples/test/S420.sp
+
+=== EXTRACTION START ===
+
+Library gates:  18
+Source subckts: 1
+
+Processing: s420 (466 FETs)
+  [Prefix pre-pass] matched 246 FETs
+  [Net-group pass]  matched 220 FETs
+  MUX3D0BWP: 3 instances (0.00 ms)
+  MUX3ND0BWP: 2 instances (0.00 ms)
+  CKXOR2D0BWP: 2 instances (0.00 ms)
+  MUX2ND0BWP: 3 instances (0.00 ms)
+  OAI22D0BWP: 1 instances (0.00 ms)
+  NR4D0BWP: 1 instances (0.00 ms)
+  AO21D0BWP: 2 instances (0.00 ms)
+  OAI21D0BWP: 6 instances (0.00 ms)
+  ND3D0BWP: 1 instances (0.00 ms)
+  NR3D0BWP: 3 instances (0.00 ms)
+  AN2D0BWP: 9 instances (0.00 ms)
+  OR2D1BWP: 7 instances (0.00 ms)
+  INR2D0BWP: 3 instances (0.00 ms)
+  CKND2D0BWP: 4 instances (0.00 ms)
+  NR2D0BWP: 14 instances (0.00 ms)
+  CKND0BWP: 19 instances (0.00 ms)
+  Coverage: 466/466 (100.0%)  Time: 5.340 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.005383 s
+Instances:  80
+Coverage:   466/466 (100.00%)
+Memory:     4992 KB (5 MB) peak RSS
+Output:     output/flat/S420.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S510
+LIB: examples/lib/libs510.sp
+TEST: examples/test/S510.sp
+===============================
+[TIMING] qg_cache=0.4ms (30 gates, lazy)
+Parsing library: examples/lib/libs510.sp
+Parsing source:  examples/test/S510.sp
+
+=== EXTRACTION START ===
+
+Library gates:  30
+Source subckts: 1
+
+Processing: s510 (776 FETs)
+  [Prefix pre-pass] matched 284 FETs
+  [Net-group pass]  matched 492 FETs
+  AOI33D0BWP: 1 instances (0.00 ms)
+  OAI33D0BWP: 2 instances (0.00 ms)
+  OAI222D0BWP: 1 instances (0.00 ms)
+  AOI221D0BWP: 1 instances (0.00 ms)
+  OAI221D0BWP: 2 instances (0.00 ms)
+  OAI32D0BWP: 2 instances (0.00 ms)
+  MAOI22D0BWP: 2 instances (0.00 ms)
+  MOAI22D0BWP: 2 instances (0.00 ms)
+  MUX2ND0BWP: 13 instances (0.00 ms)
+  AOI211D0BWP: 8 instances (0.00 ms)
+  AOI31D0BWP: 1 instances (0.00 ms)
+  OAI211D0BWP: 2 instances (0.00 ms)
+  OAI31D0BWP: 2 instances (0.00 ms)
+  AOI22D0BWP: 2 instances (0.00 ms)
+  OAI22D0BWP: 3 instances (0.00 ms)
+  ND4D0BWP: 2 instances (0.00 ms)
+  NR4D0BWP: 2 instances (0.00 ms)
+  OA21D0BWP: 1 instances (0.00 ms)
+  OR3D0BWP: 2 instances (0.00 ms)
+  IND3D0BWP: 1 instances (0.00 ms)
+  AOI21D0BWP: 6 instances (0.00 ms)
+  OAI21D0BWP: 3 instances (0.00 ms)
+  ND3D0BWP: 2 instances (0.00 ms)
+  NR3D0BWP: 1 instances (0.00 ms)
+  IND2D0BWP: 1 instances (0.00 ms)
+  INR2D0BWP: 2 instances (0.00 ms)
+  CKND2D0BWP: 12 instances (0.00 ms)
+  NR2D0BWP: 25 instances (0.00 ms)
+  CKND0BWP: 31 instances (0.00 ms)
+  Coverage: 776/776 (100.0%)  Time: 32.115 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.032158 s
+Instances:  135
+Coverage:   776/776 (100.00%)
+Memory:     5248 KB (6 MB) peak RSS
+Output:     output/flat/S510.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S526
+LIB: examples/lib/libs526.sp
+TEST: examples/test/S526.sp
+===============================
+[TIMING] qg_cache=0.1ms (25 gates, lazy)
+Parsing library: examples/lib/libs526.sp
+Parsing source:  examples/test/S526.sp
+
+=== EXTRACTION START ===
+
+Library gates:  25
+Source subckts: 1
+
+Processing: s526 (622 FETs)
+  [Prefix pre-pass] matched 188 FETs
+  [Net-group pass]  matched 374 FETs
+  Pass 1 -> +54 FETs matched
+  Pass 2 -> +6 FETs matched
+  CKMUX2D0BWP: 1 instances (0.00 ms)
+  XNR2D0BWP: 1 instances (0.00 ms)
+  AOI221D0BWP: 1 instances (0.00 ms)
+  AOI32D0BWP: 1 instances (0.00 ms)
+  AO31D0BWP: 1 instances (0.00 ms)
+  OR4D0BWP: 1 instances (0.00 ms)
+  MUX2ND0BWP: 4 instances (0.00 ms)
+  AOI211D0BWP: 3 instances (0.00 ms)
+  OAI211D0BWP: 1 instances (0.00 ms)
+  AOI22D0BWP: 1 instances (0.00 ms)
+  OAI22D0BWP: 1 instances (0.00 ms)
+  ND4D0BWP: 7 instances (0.08 ms)
+  NR4D0BWP: 2 instances (0.00 ms)
+  AOI21D0BWP: 3 instances (0.00 ms)
+  OAI21D0BWP: 3 instances (0.00 ms)
+  ND3D0BWP: 10 instances (0.07 ms)
+  NR3D0BWP: 1 instances (0.00 ms)
+  AN2D0BWP: 9 instances (0.00 ms)
+  OR2D0BWP: 8 instances (0.00 ms)
+  IND2D0BWP: 2 instances (0.00 ms)
+  INR2D0BWP: 2 instances (0.00 ms)
+  CKND2D0BWP: 16 instances (0.00 ms)
+  NR2D0BWP: 11 instances (0.00 ms)
+  CKND0BWP: 31 instances (0.03 ms)
+  Coverage: 622/622 (100.0%)  Time: 36.096 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.036144 s
+Instances:  121
+Coverage:   622/622 (100.00%)
+Memory:     5120 KB (5 MB) peak RSS
+Output:     output/flat/S526.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S838
+LIB: examples/lib/libs838.sp
+TEST: examples/test/S838.sp
+===============================
+[TIMING] qg_cache=0.2ms (23 gates, lazy)
+Parsing library: examples/lib/libs838.sp
+Parsing source:  examples/test/S838.sp
+
+=== EXTRACTION START ===
+
+Library gates:  23
+Source subckts: 1
+
+Processing: s838 (970 FETs)
+  [Prefix pre-pass] matched 542 FETs
+  [Net-group pass]  matched 424 FETs
+  Pass 1 -> +4 FETs matched
+  MUX3D0BWP: 10 instances (0.00 ms)
+  MUX3ND0BWP: 2 instances (0.00 ms)
+  CKXOR2D0BWP: 1 instances (0.00 ms)
+  XNR2D0BWP: 1 instances (0.00 ms)
+  OR4D0BWP: 1 instances (0.00 ms)
+  MOAI22D0BWP: 2 instances (0.00 ms)
+  MUX2ND0BWP: 3 instances (0.00 ms)
+  AOI211D0BWP: 1 instances (0.00 ms)
+  OAI22D0BWP: 1 instances (0.00 ms)
+  NR4D0BWP: 5 instances (0.00 ms)
+  AO21D0BWP: 1 instances (0.00 ms)
+  OAI21D0BWP: 14 instances (0.00 ms)
+  ND3D0BWP: 1 instances (0.00 ms)
+  NR3D0BWP: 7 instances (0.00 ms)
+  AN2D0BWP: 22 instances (0.00 ms)
+  OR2D1BWP: 15 instances (0.00 ms)
+  IND2D0BWP: 1 instances (0.00 ms)
+  INR2D0BWP: 6 instances (0.00 ms)
+  CKND2D0BWP: 9 instances (0.01 ms)
+  NR2D0BWP: 22 instances (0.00 ms)
+  CKND0BWP: 33 instances (0.00 ms)
+  Coverage: 970/970 (100.0%)  Time: 11.631 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.011700 s
+Instances:  158
+Coverage:   970/970 (100.00%)
+Memory:     5376 KB (6 MB) peak RSS
+Output:     output/flat/S838.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S953
+LIB: examples/lib/libs953.sp
+TEST: examples/test/S953.sp
+===============================
+[TIMING] qg_cache=0.3ms (39 gates, lazy)
+Parsing library: examples/lib/libs953.sp
+Parsing source:  examples/test/S953.sp
+
+=== EXTRACTION START ===
+
+Library gates:  39
+Source subckts: 1
+
+Processing: s953 (1238 FETs)
+  [Prefix pre-pass] matched 318 FETs
+  [Net-group pass]  matched 908 FETs
+  Pass 1 -> +12 FETs matched
+  OAI33D0BWP: 1 instances (0.00 ms)
+  XNR2D0BWP: 1 instances (0.00 ms)
+  AOI221D0BWP: 1 instances (0.00 ms)
+  OAI221D0BWP: 1 instances (0.00 ms)
+  AOI32D0BWP: 1 instances (0.00 ms)
+  OAI32D0BWP: 6 instances (0.00 ms)
+  OA211D0BWP: 1 instances (0.00 ms)
+  AN4D0BWP: 4 instances (0.00 ms)
+  MAOI22D0BWP: 1 instances (0.00 ms)
+  IND4D0BWP: 3 instances (0.00 ms)
+  MUX2ND0BWP: 3 instances (0.00 ms)
+  AOI211D0BWP: 6 instances (0.00 ms)
+  AOI31D0BWP: 1 instances (0.00 ms)
+  OAI211D0BWP: 5 instances (0.00 ms)
+  OAI31D0BWP: 2 instances (0.00 ms)
+  AOI22D0BWP: 3 instances (0.00 ms)
+  OAI22D0BWP: 5 instances (0.00 ms)
+  ND4D0BWP: 5 instances (0.00 ms)
+  NR4D0BWP: 16 instances (0.00 ms)
+  AO21D0BWP: 1 instances (0.00 ms)
+  OA21D0BWP: 1 instances (0.00 ms)
+  AN3D0BWP: 4 instances (0.00 ms)
+  AN3XD1BWP: 1 instances (0.00 ms)
+  IAO21D0BWP: 2 instances (0.00 ms)
+  IOA21D0BWP: 1 instances (0.00 ms)
+  INR3D0BWP: 4 instances (0.00 ms)
+  AOI21D0BWP: 6 instances (0.00 ms)
+  OAI21D0BWP: 5 instances (0.00 ms)
+  ND3D0BWP: 9 instances (0.00 ms)
+  NR3D0BWP: 5 instances (0.00 ms)
+  AN2D0BWP: 12 instances (0.00 ms)
+  IND2D0BWP: 2 instances (0.00 ms)
+  INR2D0BWP: 2 instances (0.00 ms)
+  CKND2D0BWP: 18 instances (0.02 ms)
+  NR2D0BWP: 25 instances (0.00 ms)
+  CKND0BWP: 65 instances (0.00 ms)
+  Coverage: 1238/1238 (100.0%)  Time: 92.712 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.092795 s
+Instances:  229
+Coverage:   1238/1238 (100.00%)
+Memory:     5632 KB (6 MB) peak RSS
+Output:     output/flat/S953.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S1196
+LIB: examples/lib/libs1196.sp
+TEST: examples/test/S1196.sp
+===============================
+[TIMING] qg_cache=0.3ms (45 gates, lazy)
+Parsing library: examples/lib/libs1196.sp
+Parsing source:  examples/test/S1196.sp
+
+=== EXTRACTION START ===
+
+Library gates:  45
+Source subckts: 1
+
+Processing: s1196 (1620 FETs)
+  [Prefix pre-pass] matched 608 FETs
+  [Net-group pass]  matched 1002 FETs
+  Pass 1 -> +10 FETs matched
+  MUX3ND0BWP: 1 instances (0.00 ms)
+  OA222D0BWP: 1 instances (0.00 ms)
+  AOI33D0BWP: 3 instances (0.00 ms)
+  OAI222D0BWP: 3 instances (0.00 ms)
+  OA32D0BWP: 1 instances (0.00 ms)
+  CKMUX2D0BWP: 1 instances (0.00 ms)
+  CKXOR2D0BWP: 1 instances (0.00 ms)
+  AOI221D0BWP: 5 instances (0.00 ms)
+  OAI221D0BWP: 2 instances (0.00 ms)
+  AOI32D0BWP: 6 instances (0.00 ms)
+  OAI32D0BWP: 6 instances (0.00 ms)
+  AO211D0BWP: 3 instances (0.00 ms)
+  OA211D0BWP: 1 instances (0.00 ms)
+  OA31D0BWP: 1 instances (0.00 ms)
+  AN4D0BWP: 3 instances (0.00 ms)
+  MAOI22D0BWP: 1 instances (0.00 ms)
+  MOAI22D0BWP: 2 instances (0.00 ms)
+  IND4D0BWP: 2 instances (0.00 ms)
+  MUX2ND0BWP: 8 instances (0.00 ms)
+  AOI211D0BWP: 3 instances (0.00 ms)
+  AOI31D0BWP: 4 instances (0.00 ms)
+  OAI211D0BWP: 11 instances (0.00 ms)
+  OAI31D0BWP: 9 instances (0.00 ms)
+  AOI22D0BWP: 3 instances (0.00 ms)
+  OAI22D0BWP: 8 instances (0.00 ms)
+  ND4D0BWP: 3 instances (0.00 ms)
+  NR4D0BWP: 1 instances (0.00 ms)
+  AO21D0BWP: 1 instances (0.00 ms)
+  OA21D0BWP: 2 instances (0.00 ms)
+  AN3D0BWP: 4 instances (0.00 ms)
+  AN3XD1BWP: 3 instances (0.00 ms)
+  IOA21D0BWP: 2 instances (0.00 ms)
+  AOI21D0BWP: 3 instances (0.00 ms)
+  OAI21D0BWP: 6 instances (0.00 ms)
+  ND3D0BWP: 19 instances (0.04 ms)
+  NR3D0BWP: 8 instances (0.00 ms)
+  AN2XD1BWP: 18 instances (0.00 ms)
+  INR2D0BWP: 5 instances (0.00 ms)
+  CKND2D0BWP: 27 instances (0.01 ms)
+  NR2D0BWP: 24 instances (0.00 ms)
+  CKND0BWP: 45 instances (0.00 ms)
+  Coverage: 1620/1620 (100.0%)  Time: 111.412 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.111537 s
+Instances:  260
+Coverage:   1620/1620 (100.00%)
+Memory:     5888 KB (6 MB) peak RSS
+Output:     output/flat/S1196.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S1423
+LIB: examples/lib/libs1423.sp
+TEST: examples/test/S1423.sp
+===============================
+[TIMING] qg_cache=0.3ms (41 gates, lazy)
+Parsing library: examples/lib/libs1423.sp
+Parsing source:  examples/test/S1423.sp
+
+=== EXTRACTION START ===
+
+Library gates:  41
+Source subckts: 1
+
+Processing: s1423 (2050 FETs)
+  [Prefix pre-pass] matched 1348 FETs
+  [Net-group pass]  matched 698 FETs
+  Pass 1 -> +4 FETs matched
+  MUX3ND0BWP: 1 instances (0.00 ms)
+  OAI33D0BWP: 1 instances (0.00 ms)
+  AO32D0BWP: 1 instances (0.00 ms)
+  CKMUX2D0BWP: 3 instances (0.00 ms)
+  CKXOR2D0BWP: 26 instances (0.00 ms)
+  XNR2D0BWP: 6 instances (0.00 ms)
+  AOI221D0BWP: 1 instances (0.00 ms)
+  OAI221D0BWP: 1 instances (0.00 ms)
+  OAI32D0BWP: 3 instances (0.00 ms)
+  AO31D0BWP: 1 instances (0.00 ms)
+  AN4D0BWP: 2 instances (0.00 ms)
+  MAOI22D0BWP: 7 instances (0.00 ms)
+  MOAI22D0BWP: 2 instances (0.00 ms)
+  MUX2ND0BWP: 21 instances (0.00 ms)
+  AOI211D0BWP: 1 instances (0.00 ms)
+  AOI31D0BWP: 1 instances (0.00 ms)
+  OAI211D0BWP: 1 instances (0.00 ms)
+  OAI31D0BWP: 2 instances (0.00 ms)
+  AOI22D0BWP: 2 instances (0.00 ms)
+  OAI22D0BWP: 2 instances (0.00 ms)
+  ND4D0BWP: 2 instances (0.00 ms)
+  NR4D0BWP: 1 instances (0.00 ms)
+  AO21D0BWP: 1 instances (0.00 ms)
+  OA21D0BWP: 3 instances (0.00 ms)
+  AN3D0BWP: 7 instances (0.00 ms)
+  IAO21D0BWP: 1 instances (0.00 ms)
+  IOA21D0BWP: 3 instances (0.00 ms)
+  AOI21D0BWP: 13 instances (0.00 ms)
+  OAI21D0BWP: 5 instances (0.00 ms)
+  ND3D0BWP: 1 instances (0.00 ms)
+  NR3D0BWP: 3 instances (0.00 ms)
+  AN2D0BWP: 73 instances (0.00 ms)
+  OR2D0BWP: 12 instances (0.00 ms)
+  IND2D0BWP: 3 instances (0.00 ms)
+  INR2D0BWP: 4 instances (0.00 ms)
+  CKND2D0BWP: 31 instances (0.05 ms)
+  NR2D0BWP: 20 instances (0.00 ms)
+  CKND0BWP: 52 instances (0.00 ms)
+  Coverage: 2050/2050 (100.0%)  Time: 29.461 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.029589 s
+Instances:  320
+Coverage:   2050/2050 (100.00%)
+Memory:     5984 KB (6 MB) peak RSS
+Output:     output/flat/S1423.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S1488
+LIB: examples/lib/libs1488.sp
+TEST: examples/test/S1488.sp
+===============================
+[TIMING] qg_cache=0.3ms (39 gates, lazy)
+Parsing library: examples/lib/libs1488.sp
+Parsing source:  examples/test/S1488.sp
+
+=== EXTRACTION START ===
+
+Library gates:  39
+Source subckts: 1
+
+Processing: s1488 (1762 FETs)
+  [Prefix pre-pass] matched 730 FETs
+  [Net-group pass]  matched 1032 FETs
+  AOI33D0BWP: 2 instances (0.00 ms)
+  OAI33D0BWP: 2 instances (0.00 ms)
+  AOI222D0BWP: 2 instances (0.00 ms)
+  OAI222D0BWP: 2 instances (0.00 ms)
+  AO32D0BWP: 1 instances (0.00 ms)
+  OA221D0BWP: 1 instances (0.00 ms)
+  XNR2D0BWP: 1 instances (0.00 ms)
+  AOI221D0BWP: 6 instances (0.00 ms)
+  OAI221D0BWP: 1 instances (0.00 ms)
+  AOI32D0BWP: 9 instances (0.00 ms)
+  OAI32D0BWP: 4 instances (0.00 ms)
+  AO31D0BWP: 3 instances (0.00 ms)
+  OA31D0BWP: 3 instances (0.00 ms)
+  AN4D0BWP: 2 instances (0.00 ms)
+  OR4D0BWP: 2 instances (0.00 ms)
+  MAOI22D0BWP: 2 instances (0.00 ms)
+  MOAI22D0BWP: 1 instances (0.00 ms)
+  MUX2ND0BWP: 11 instances (0.00 ms)
+  AOI211D0BWP: 8 instances (0.00 ms)
+  AOI31D0BWP: 6 instances (0.00 ms)
+  OAI211D0BWP: 16 instances (0.00 ms)
+  OAI31D0BWP: 5 instances (0.00 ms)
+  AOI22D0BWP: 17 instances (0.00 ms)
+  OAI22D0BWP: 6 instances (0.00 ms)
+  ND4D0BWP: 8 instances (0.00 ms)
+  NR4D0BWP: 2 instances (0.00 ms)
+  AO21D0BWP: 2 instances (0.00 ms)
+  AN3D0BWP: 2 instances (0.00 ms)
+  INR3D0BWP: 1 instances (0.00 ms)
+  AOI21D0BWP: 10 instances (0.00 ms)
+  OAI21D0BWP: 9 instances (0.00 ms)
+  ND3D0BWP: 6 instances (0.00 ms)
+  NR3D0BWP: 5 instances (0.00 ms)
+  AN2D0BWP: 7 instances (0.00 ms)
+  INR2D0BWP: 4 instances (0.00 ms)
+  CKND2D0BWP: 21 instances (0.00 ms)
+  NR2D0BWP: 49 instances (0.00 ms)
+  CKND0BWP: 40 instances (0.00 ms)
+  Coverage: 1762/1762 (100.0%)  Time: 108.454 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.108602 s
+Instances:  279
+Coverage:   1762/1762 (100.00%)
+Memory:     5824 KB (6 MB) peak RSS
+Output:     output/flat/S1488.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S13207
+LIB: examples/lib/libs13207.sp
+TEST: examples/test/S13207.sp
+===============================
+[TIMING] qg_cache=0.4ms (55 gates, lazy)
+Parsing library: examples/lib/libs13207.sp
+Parsing source:  examples/test/S13207.sp
+
+=== EXTRACTION START ===
+
+Library gates:  55
+Source subckts: 1
+
+Processing: s13207 (8754 FETs)
+  [Divide-and-conquer] batch=750
+  [Prefix pre-pass] matched 4474 FETs
+  [Net-group pass]  matched 4226 FETs
+  [Loop 1] -> 54 instances
+  [Loop 2] -> 0 instances
+  Loops completed: 1
+  XOR4D0BWP: 8 instances (0.00 ms)
+  XNR3D0BWP: 2 instances (0.00 ms)
+  AO33D0BWP: 2 instances (0.00 ms)
+  AO222D0BWP: 4 instances (0.00 ms)
+  OAI33D0BWP: 2 instances (0.00 ms)
+  AOI222D0BWP: 16 instances (0.00 ms)
+  OAI222D0BWP: 2 instances (0.00 ms)
+  AO221D0BWP: 26 instances (0.00 ms)
+  CKMUX2D0BWP: 4 instances (0.00 ms)
+  CKXOR2D0BWP: 38 instances (0.00 ms)
+  XNR2D0BWP: 180 instances (0.00 ms)
+  AOI221D0BWP: 18 instances (0.00 ms)
+  OAI221D0BWP: 6 instances (0.00 ms)
+  OAI32D0BWP: 8 instances (0.00 ms)
+  AO211D0BWP: 8 instances (0.00 ms)
+  OA31D0BWP: 3 instances (0.00 ms)
+  AO22D0BWP: 24 instances (0.00 ms)
+  AN4D0BWP: 26 instances (0.00 ms)
+  OR4D0BWP: 5 instances (0.00 ms)
+  MAOI22D0BWP: 9 instances (0.00 ms)
+  MOAI22D0BWP: 6 instances (0.00 ms)
+  MUX2ND0BWP: 322 instances (0.00 ms)
+  AOI211D0BWP: 6 instances (0.00 ms)
+  AOI31D0BWP: 2 instances (0.00 ms)
+  OAI211D0BWP: 49 instances (0.00 ms)
+  OAI31D0BWP: 7 instances (0.00 ms)
+  AOI22D0BWP: 58 instances (0.00 ms)
+  OAI22D0BWP: 14 instances (0.00 ms)
+  ND4D0BWP: 18 instances (0.00 ms)
+  NR4D0BWP: 18 instances (0.00 ms)
+  AO21D0BWP: 33 instances (0.00 ms)
+  OA21D0BWP: 19 instances (0.00 ms)
+  AN3D0BWP: 21 instances (0.00 ms)
+  OR3D0BWP: 9 instances (0.00 ms)
+  IND3D0BWP: 4 instances (0.00 ms)
+  INR3D0BWP: 6 instances (0.00 ms)
+  AOI21D0BWP: 11 instances (0.00 ms)
+  OAI21D0BWP: 15 instances (0.00 ms)
+  ND3D0BWP: 21 instances (0.00 ms)
+  NR3D0BWP: 14 instances (0.00 ms)
+  AN2D0BWP: 102 instances (0.00 ms)
+  OR2D0BWP: 24 instances (0.00 ms)
+  IND2D0BWP: 8 instances (0.00 ms)
+  INR2D0BWP: 25 instances (0.00 ms)
+  CKND2D0BWP: 80 instances (0.06 ms)
+  NR2D0BWP: 42 instances (0.00 ms)
+  CKND0BWP: 683 instances (0.53 ms)
+  TIEHBWP: 4 instances (0.00 ms)
+  Coverage: 8754/8754 (100.0%)  Time: 262.848 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.263621 s
+Instances:  1575
+Coverage:   8754/8754 (100.00%)
+Memory:     10128 KB (10 MB) peak RSS
+Output:     output/flat/S13207.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S15850
+LIB: examples/lib/libs15850.sp
+TEST: examples/test/S15850.sp
+===============================
+[TIMING] qg_cache=0.5ms (65 gates, lazy)
+Parsing library: examples/lib/libs15850.sp
+Parsing source:  examples/test/S15850.sp
+
+=== EXTRACTION START ===
+
+Library gates:  65
+Source subckts: 1
+
+Processing: s15850 (11260 FETs)
+  [Divide-and-conquer] batch=750
+  [Prefix pre-pass] matched 5896 FETs
+  [Net-group pass]  matched 5336 FETs
+  [Loop 1] -> 20 instances
+  [Loop 2] -> 8 instances
+  [Loop 3] -> 0 instances
+  Loops completed: 1
+  XOR4D0BWP: 20 instances (0.00 ms)
+  XNR3D0BWP: 4 instances (0.00 ms)
+  XOR3D0BWP: 4 instances (0.00 ms)
+  MUX3ND0BWP: 4 instances (0.00 ms)
+  AO222D0BWP: 10 instances (0.00 ms)
+  OA222D0BWP: 2 instances (0.00 ms)
+  AOI222D0BWP: 44 instances (0.00 ms)
+  OAI222D0BWP: 4 instances (0.00 ms)
+  IINR4D0BWP: 3 instances (0.00 ms)
+  IIND4D0BWP: 2 instances (0.00 ms)
+  CKMUX2D0BWP: 20 instances (0.00 ms)
+  CKXOR2D0BWP: 128 instances (0.00 ms)
+  XNR2D0BWP: 90 instances (0.00 ms)
+  AOI221D0BWP: 9 instances (0.00 ms)
+  OAI221D0BWP: 1 instances (0.00 ms)
+  AOI32D0BWP: 10 instances (0.00 ms)
+  OAI32D0BWP: 14 instances (0.00 ms)
+  AO211D0BWP: 7 instances (0.00 ms)
+  AO31D0BWP: 2 instances (0.00 ms)
+  OA211D0BWP: 15 instances (0.00 ms)
+  AO22D0BWP: 2 instances (0.00 ms)
+  AN4D0BWP: 36 instances (0.00 ms)
+  OR4D0BWP: 6 instances (0.00 ms)
+  MAOI22D0BWP: 4 instances (0.00 ms)
+  MOAI22D0BWP: 3 instances (0.00 ms)
+  IND4D1BWP: 2 instances (0.00 ms)
+  INR4D0BWP: 3 instances (0.00 ms)
+  MUX2ND0BWP: 440 instances (0.00 ms)
+  AOI211D0BWP: 3 instances (0.00 ms)
+  AOI31D0BWP: 2 instances (0.00 ms)
+  OAI211D0BWP: 16 instances (0.00 ms)
+  OAI31D0BWP: 6 instances (0.00 ms)
+  AOI22D0BWP: 36 instances (0.00 ms)
+  OAI22D0BWP: 18 instances (0.00 ms)
+  ND4D0BWP: 27 instances (0.02 ms)
+  NR4D0BWP: 18 instances (0.00 ms)
+  AO21D0BWP: 15 instances (0.00 ms)
+  OA21D0BWP: 66 instances (0.00 ms)
+  AN3D0BWP: 15 instances (0.00 ms)
+  OR3D0BWP: 20 instances (0.00 ms)
+  IAO21D0BWP: 1 instances (0.00 ms)
+  IOA21D0BWP: 9 instances (0.00 ms)
+  IND3D0BWP: 3 instances (0.00 ms)
+  INR3D0BWP: 5 instances (0.00 ms)
+  AOI21D0BWP: 16 instances (0.00 ms)
+  OAI21D0BWP: 24 instances (0.00 ms)
+  ND3D0BWP: 22 instances (0.00 ms)
+  NR3D0BWP: 25 instances (0.00 ms)
+  AN2D0BWP: 180 instances (0.00 ms)
+  OR2D0BWP: 180 instances (0.00 ms)
+  IND2D0BWP: 6 instances (0.00 ms)
+  INR2D0BWP: 59 instances (0.00 ms)
+  CKND2D0BWP: 95 instances (0.07 ms)
+  NR2D0BWP: 176 instances (0.00 ms)
+  CKND0BWP: 432 instances (0.00 ms)
+  TIEHBWP: 4 instances (0.00 ms)
+  Coverage: 11260/11260 (100.0%)  Time: 942.767 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.943441 s
+Instances:  1784
+Coverage:   11260/11260 (100.00%)
+Memory:     11660 KB (12 MB) peak RSS
+Output:     output/flat/S15850.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S35932
+LIB: examples/lib/libs35932.sp
+TEST: examples/test/S35932.sp
+===============================
+[TIMING] qg_cache=0.1ms (15 gates, lazy)
+Parsing library: examples/lib/libs35932.sp
+Parsing source:  examples/test/S35932.sp
+
+=== EXTRACTION START ===
+
+Library gates:  15
+Source subckts: 1
+
+Processing: s35932 (31622 FETs)
+  [Divide-and-conquer] batch=750
+  [Prefix pre-pass] matched 27982 FETs
+  [Net-group pass]  matched 3640 FETs
+  [Loop 1] -> 0 instances
+  Loops completed: 1
+  XOR4D0BWP: 576 instances (0.00 ms)
+  XNR3D0BWP: 54 instances (0.00 ms)
+  AO221D0BWP: 8 instances (0.00 ms)
+  CKXOR2D0BWP: 88 instances (0.00 ms)
+  XNR2D0BWP: 818 instances (0.00 ms)
+  OAI221D0BWP: 284 instances (0.00 ms)
+  MOAI22D0BWP: 8 instances (0.00 ms)
+  AOI22D0BWP: 568 instances (0.00 ms)
+  AN2XD1BWP: 3457 instances (0.00 ms)
+  CKND2D0BWP: 33 instances (0.00 ms)
+  NR2D0BWP: 2 instances (0.00 ms)
+  CKBD1BWP: 292 instances (0.00 ms)
+  CKND0BWP: 327 instances (0.00 ms)
+  Coverage: 31622/31622 (100.0%)  Time: 292.450 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.293791 s
+Instances:  3581
+Coverage:   31622/31622 (100.00%)
+Memory:     25348 KB (25 MB) peak RSS
+Output:     output/flat/S35932.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: S38417
+LIB: examples/lib/libs38417.sp
+TEST: examples/test/S38417.sp
+===============================
+[TIMING] qg_cache=0.4ms (55 gates, lazy)
+Parsing library: examples/lib/libs38417.sp
+Parsing source:  examples/test/S38417.sp
+
+=== EXTRACTION START ===
+
+Library gates:  55
+Source subckts: 1
+
+Processing: s38417 (30656 FETs)
+  [Divide-and-conquer] batch=750
+  [Prefix pre-pass] matched 21376 FETs
+  [Net-group pass]  matched 9218 FETs
+  [Loop 1] -> 62 instances
+  [Loop 2] -> 0 instances
+  Loops completed: 1
+  XNR4D0BWP: 4 instances (0.00 ms)
+  XOR4D0BWP: 28 instances (0.00 ms)
+  MUX3ND0BWP: 24 instances (0.00 ms)
+  AO222D0BWP: 30 instances (0.00 ms)
+  OA222D0BWP: 128 instances (0.00 ms)
+  AOI222D0BWP: 228 instances (0.00 ms)
+  OAI222D0BWP: 256 instances (0.00 ms)
+  AO32D0BWP: 16 instances (0.00 ms)
+  OA221D0BWP: 32 instances (0.00 ms)
+  CKMUX2D0BWP: 36 instances (0.00 ms)
+  CKXOR2D0BWP: 100 instances (0.00 ms)
+  XNR2D0BWP: 460 instances (0.00 ms)
+  AOI221D0BWP: 29 instances (0.00 ms)
+  OAI221D0BWP: 4 instances (0.00 ms)
+  AOI32D0BWP: 38 instances (0.00 ms)
+  OAI32D0BWP: 50 instances (0.00 ms)
+  AO211D0BWP: 36 instances (0.00 ms)
+  AO31D0BWP: 16 instances (0.00 ms)
+  OA211D0BWP: 65 instances (0.00 ms)
+  AO22D0BWP: 24 instances (0.00 ms)
+  OA22D1BWP: 4 instances (0.00 ms)
+  AN4D0BWP: 29 instances (0.00 ms)
+  MAOI22D0BWP: 64 instances (0.00 ms)
+  MOAI22D0BWP: 20 instances (0.00 ms)
+  IND4D0BWP: 2 instances (0.00 ms)
+  INR4D0BWP: 7 instances (0.00 ms)
+  MUX2ND0BWP: 1924 instances (0.00 ms)
+  AOI211D0BWP: 2 instances (0.00 ms)
+  AOI31D0BWP: 4 instances (0.00 ms)
+  OAI211D0BWP: 51 instances (0.00 ms)
+  OAI31D0BWP: 17 instances (0.00 ms)
+  AOI22D0BWP: 40 instances (0.00 ms)
+  OAI22D0BWP: 164 instances (0.00 ms)
+  ND4D0BWP: 22 instances (0.00 ms)
+  NR4D0BWP: 35 instances (0.00 ms)
+  OA21D0BWP: 39 instances (0.00 ms)
+  AN3D0BWP: 71 instances (0.00 ms)
+  IAO21D0BWP: 5 instances (0.00 ms)
+  IOA21D0BWP: 1 instances (0.00 ms)
+  IND3D0BWP: 11 instances (0.00 ms)
+  INR3D0BWP: 9 instances (0.00 ms)
+  AOI21D0BWP: 46 instances (0.00 ms)
+  OAI21D0BWP: 49 instances (0.00 ms)
+  ND3D0BWP: 43 instances (0.05 ms)
+  NR3D0BWP: 39 instances (0.00 ms)
+  AN2D0BWP: 196 instances (0.00 ms)
+  OR2D0BWP: 32 instances (0.00 ms)
+  IND2D0BWP: 6 instances (0.00 ms)
+  INR2D0BWP: 41 instances (0.00 ms)
+  CKND2D0BWP: 187 instances (0.35 ms)
+  NR2D0BWP: 220 instances (0.00 ms)
+  CKND0BWP: 1832 instances (0.00 ms)
+  Coverage: 30656/30656 (100.0%)  Time: 609.617 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.612973 s
+Instances:  4805
+Coverage:   30656/30656 (100.00%)
+Memory:     24304 KB (24 MB) peak RSS
+Output:     output/flat/S38417.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C17
+LIB: examples/lib/libc17.sp
+TEST: examples/test/C17.sp
+===============================
+[TIMING] qg_cache=0.0ms (6 gates, lazy)
+Parsing library: examples/lib/libc17.sp
+Parsing source:  examples/test/C17.sp
+
+=== EXTRACTION START ===
+
+Library gates:  6
+Source subckts: 1
+
+Processing: c17 (24 FETs)
+  [Net-group pass]  matched 24 FETs
+  NAND2: 6 instances (0.00 ms)
+  Coverage: 24/24 (100.0%)  Time: 0.474 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.000494 s
+Instances:  6
+Coverage:   24/24 (100.00%)
+Memory:     4480 KB (5 MB) peak RSS
+Output:     output/flat/C17.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C432
+LIB: examples/lib/libc432.sp
+TEST: examples/test/C432.sp
+===============================
+[TIMING] qg_cache=0.2ms (27 gates, lazy)
+Parsing library: examples/lib/libc432.sp
+Parsing source:  examples/test/C432.sp
+
+=== EXTRACTION START ===
+
+Library gates:  27
+Source subckts: 1
+
+Processing: c432 (532 FETs)
+  [Prefix pre-pass] matched 92 FETs
+  [Net-group pass]  matched 440 FETs
+  AOI33D0BWP: 3 instances (0.00 ms)
+  AOI221D0BWP: 3 instances (0.00 ms)
+  OAI221D0BWP: 1 instances (0.00 ms)
+  AOI32D0BWP: 1 instances (0.00 ms)
+  AN4D0BWP: 2 instances (0.00 ms)
+  IND4D0BWP: 1 instances (0.00 ms)
+  INR4D0BWP: 2 instances (0.00 ms)
+  AOI211D0BWP: 3 instances (0.00 ms)
+  OAI211D0BWP: 6 instances (0.00 ms)
+  AOI22D0BWP: 1 instances (0.00 ms)
+  OAI22D0BWP: 1 instances (0.00 ms)
+  ND4D0BWP: 2 instances (0.00 ms)
+  NR4D0BWP: 2 instances (0.00 ms)
+  OA21D0BWP: 1 instances (0.00 ms)
+  IAO21D0BWP: 1 instances (0.00 ms)
+  IND3D0BWP: 2 instances (0.00 ms)
+  INR3D0BWP: 2 instances (0.00 ms)
+  AOI21D0BWP: 9 instances (0.00 ms)
+  OAI21D0BWP: 3 instances (0.00 ms)
+  ND3D0BWP: 1 instances (0.00 ms)
+  NR3D0BWP: 2 instances (0.00 ms)
+  OR2D0BWP: 2 instances (0.00 ms)
+  IND2D0BWP: 3 instances (0.00 ms)
+  INR2D0BWP: 1 instances (0.00 ms)
+  CKND2D0BWP: 6 instances (0.00 ms)
+  NR2D0BWP: 9 instances (0.00 ms)
+  CKND0BWP: 21 instances (0.00 ms)
+  Coverage: 532/532 (100.0%)  Time: 21.101 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.021153 s
+Instances:  91
+Coverage:   532/532 (100.00%)
+Memory:     5248 KB (6 MB) peak RSS
+Output:     output/flat/C432.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C499
+LIB: examples/lib/libc499.sp
+TEST: examples/test/C499.sp
+===============================
+[TIMING] qg_cache=0.1ms (7 gates, lazy)
+Parsing library: examples/lib/libc499.sp
+Parsing source:  examples/test/C499.sp
+
+=== EXTRACTION START ===
+
+Library gates:  7
+Source subckts: 1
+
+Processing: c499 (1416 FETs)
+  [Prefix pre-pass] matched 1208 FETs
+  [Net-group pass]  matched 208 FETs
+  XOR4D0BWP: 24 instances (0.00 ms)
+  OAI33D0BWP: 2 instances (0.00 ms)
+  XNR2D0BWP: 32 instances (0.00 ms)
+  AN4D0BWP: 8 instances (0.00 ms)
+  CKND2D0BWP: 40 instances (0.00 ms)
+  NR2D0BWP: 8 instances (0.00 ms)
+  CKND0BWP: 8 instances (0.00 ms)
+  Coverage: 1416/1416 (100.0%)  Time: 8.341 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.008376 s
+Instances:  122
+Coverage:   1416/1416 (100.00%)
+Memory:     5352 KB (6 MB) peak RSS
+Output:     output/flat/C499.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C880
+LIB: examples/lib/libc880.sp
+TEST: examples/test/C880.sp
+===============================
+[TIMING] qg_cache=0.3ms (34 gates, lazy)
+Parsing library: examples/lib/libc880.sp
+Parsing source:  examples/test/C880.sp
+
+=== EXTRACTION START ===
+
+Library gates:  34
+Source subckts: 1
+
+Processing: c880 (1108 FETs)
+  [Prefix pre-pass] matched 552 FETs
+  [Net-group pass]  matched 556 FETs
+  XOR4D0BWP: 6 instances (0.00 ms)
+  OAI33D0BWP: 1 instances (0.00 ms)
+  AOI222D0BWP: 6 instances (0.00 ms)
+  CKXOR2D0BWP: 2 instances (0.00 ms)
+  XNR2D0BWP: 4 instances (0.00 ms)
+  AOI221D0BWP: 3 instances (0.00 ms)
+  OAI221D0BWP: 7 instances (0.00 ms)
+  AOI32D0BWP: 2 instances (0.00 ms)
+  AN4D0BWP: 4 instances (0.00 ms)
+  MAOI22D0BWP: 4 instances (0.00 ms)
+  MUX2ND0BWP: 2 instances (0.00 ms)
+  AOI31D0BWP: 2 instances (0.00 ms)
+  OAI211D0BWP: 9 instances (0.00 ms)
+  OAI31D0BWP: 1 instances (0.00 ms)
+  AOI22D0BWP: 6 instances (0.00 ms)
+  OAI22D0BWP: 1 instances (0.00 ms)
+  NR4D0BWP: 1 instances (0.00 ms)
+  AO21D0BWP: 1 instances (0.00 ms)
+  OA21D0BWP: 6 instances (0.00 ms)
+  IAO21D0BWP: 2 instances (0.00 ms)
+  IOA21D0BWP: 1 instances (0.00 ms)
+  INR3D0BWP: 2 instances (0.00 ms)
+  AOI21D0BWP: 2 instances (0.00 ms)
+  OAI21D0BWP: 4 instances (0.00 ms)
+  ND3D0BWP: 7 instances (0.00 ms)
+  NR3D0BWP: 5 instances (0.00 ms)
+  AN2D0BWP: 2 instances (0.00 ms)
+  IND2D0BWP: 4 instances (0.00 ms)
+  INR2D0BWP: 3 instances (0.00 ms)
+  CKND2D0BWP: 9 instances (0.00 ms)
+  NR2D0BWP: 9 instances (0.00 ms)
+  CKND0BWP: 31 instances (0.00 ms)
+  Coverage: 1108/1108 (100.0%)  Time: 28.644 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.028699 s
+Instances:  149
+Coverage:   1108/1108 (100.00%)
+Memory:     5496 KB (6 MB) peak RSS
+Output:     output/flat/C880.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C1355
+LIB: examples/lib/libc1355.sp
+TEST: examples/test/C1355.sp
+===============================
+[TIMING] qg_cache=0.1ms (14 gates, lazy)
+Parsing library: examples/lib/libc1355.sp
+Parsing source:  examples/test/C1355.sp
+
+=== EXTRACTION START ===
+
+Library gates:  14
+Source subckts: 1
+
+Processing: c1355 (1548 FETs)
+  [Prefix pre-pass] matched 1136 FETs
+  [Net-group pass]  matched 412 FETs
+  XOR4D0BWP: 16 instances (0.00 ms)
+  CKXOR2D0BWP: 40 instances (0.00 ms)
+  OAI32D0BWP: 2 instances (0.00 ms)
+  MAOI222D0BWP: 2 instances (0.00 ms)
+  MUX2ND0BWP: 12 instances (0.00 ms)
+  AN3D0BWP: 7 instances (0.00 ms)
+  INR3D0BWP: 10 instances (0.00 ms)
+  AOI21D0BWP: 8 instances (0.00 ms)
+  ND3D0BWP: 3 instances (0.00 ms)
+  IND2D0BWP: 4 instances (0.00 ms)
+  INR2D0BWP: 2 instances (0.00 ms)
+  CKND2D0BWP: 36 instances (0.00 ms)
+  NR2D0BWP: 6 instances (0.00 ms)
+  CKND0BWP: 11 instances (0.00 ms)
+  Coverage: 1548/1548 (100.0%)  Time: 17.901 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.018000 s
+Instances:  159
+Coverage:   1548/1548 (100.00%)
+Memory:     5424 KB (6 MB) peak RSS
+Output:     output/flat/C1355.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C1908
+LIB: examples/lib/libc1908.sp
+TEST: examples/test/C1908.sp
+===============================
+[TIMING] qg_cache=0.2ms (25 gates, lazy)
+Parsing library: examples/lib/libc1908.sp
+Parsing source:  examples/test/C1908.sp
+
+=== EXTRACTION START ===
+
+Library gates:  25
+Source subckts: 1
+
+Processing: c1908 (1420 FETs)
+  [Prefix pre-pass] matched 980 FETs
+  [Net-group pass]  matched 440 FETs
+  XOR4D0BWP: 8 instances (0.00 ms)
+  XNR3D0BWP: 2 instances (0.00 ms)
+  XOR3D0BWP: 7 instances (0.00 ms)
+  CKXOR2D0BWP: 20 instances (0.00 ms)
+  XNR2D0BWP: 13 instances (0.00 ms)
+  AN4D0BWP: 6 instances (0.00 ms)
+  MOAI22D0BWP: 1 instances (0.00 ms)
+  OAI211D0BWP: 2 instances (0.00 ms)
+  AOI22D0BWP: 1 instances (0.00 ms)
+  OAI22D0BWP: 1 instances (0.00 ms)
+  ND4D0BWP: 4 instances (0.00 ms)
+  NR4D0BWP: 2 instances (0.00 ms)
+  OA21D0BWP: 4 instances (0.00 ms)
+  AN3D0BWP: 7 instances (0.00 ms)
+  IAO21D0BWP: 2 instances (0.00 ms)
+  AOI21D0BWP: 3 instances (0.00 ms)
+  OAI21D0BWP: 2 instances (0.00 ms)
+  ND3D0BWP: 3 instances (0.00 ms)
+  NR3D0BWP: 1 instances (0.00 ms)
+  AN2D0BWP: 3 instances (0.00 ms)
+  INR2D0BWP: 9 instances (0.00 ms)
+  CKND2D0BWP: 16 instances (0.00 ms)
+  NR2D0BWP: 28 instances (0.00 ms)
+  CKND0BWP: 15 instances (0.00 ms)
+  Coverage: 1420/1420 (100.0%)  Time: 19.482 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.019605 s
+Instances:  160
+Coverage:   1420/1420 (100.00%)
+Memory:     5504 KB (6 MB) peak RSS
+Output:     output/flat/C1908.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C2670
+LIB: examples/lib/libc2670.sp
+TEST: examples/test/C2670.sp
+===============================
+[TIMING] qg_cache=0.3ms (30 gates, lazy)
+Parsing library: examples/lib/libc2670.sp
+Parsing source:  examples/test/C2670.sp
+
+=== EXTRACTION START ===
+
+Library gates:  30
+Source subckts: 1
+
+Processing: c2670 (1946 FETs)
+  [Prefix pre-pass] matched 1464 FETs
+  [Net-group pass]  matched 482 FETs
+  XOR4D0BWP: 13 instances (0.00 ms)
+  XOR3D0BWP: 2 instances (0.00 ms)
+  OA32D0BWP: 2 instances (0.00 ms)
+  CKMUX2D0BWP: 1 instances (0.00 ms)
+  CKXOR2D0BWP: 26 instances (0.00 ms)
+  XNR2D0BWP: 10 instances (0.00 ms)
+  AOI221D0BWP: 2 instances (0.00 ms)
+  AOI32D0BWP: 3 instances (0.00 ms)
+  OAI32D0BWP: 5 instances (0.00 ms)
+  AO22D0BWP: 3 instances (0.00 ms)
+  MAOI22D0BWP: 1 instances (0.00 ms)
+  MAOI222D0BWP: 1 instances (0.00 ms)
+  MUX2ND0BWP: 10 instances (0.00 ms)
+  AOI211D0BWP: 1 instances (0.00 ms)
+  AOI22D0BWP: 36 instances (0.00 ms)
+  ND4D0BWP: 7 instances (0.00 ms)
+  NR4D0BWP: 5 instances (0.00 ms)
+  AN3D0BWP: 2 instances (0.00 ms)
+  IOA21D0BWP: 2 instances (0.00 ms)
+  IND3D0BWP: 1 instances (0.00 ms)
+  INR3D0BWP: 2 instances (0.00 ms)
+  OAI21D0BWP: 1 instances (0.00 ms)
+  ND3D0BWP: 4 instances (0.00 ms)
+  NR3D0BWP: 5 instances (0.00 ms)
+  AN2D0BWP: 12 instances (0.00 ms)
+  OR2D0BWP: 2 instances (0.00 ms)
+  IND2D0BWP: 1 instances (0.00 ms)
+  CKND2D0BWP: 16 instances (0.00 ms)
+  NR2D0BWP: 15 instances (0.00 ms)
+  CKND0BWP: 36 instances (0.00 ms)
+  Coverage: 1946/1946 (100.0%)  Time: 13.526 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.013669 s
+Instances:  227
+Coverage:   1946/1946 (100.00%)
+Memory:     5828 KB (6 MB) peak RSS
+Output:     output/flat/C2670.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C3540
+LIB: examples/lib/libc3540.sp
+TEST: examples/test/C3540.sp
+===============================
+[TIMING] qg_cache=0.4ms (45 gates, lazy)
+Parsing library: examples/lib/libc3540.sp
+Parsing source:  examples/test/C3540.sp
+
+=== EXTRACTION START ===
+
+Library gates:  45
+Source subckts: 1
+
+Processing: c3540 (3070 FETs)
+  [Prefix pre-pass] matched 1666 FETs
+  [Net-group pass]  matched 1404 FETs
+  XOR4D0BWP: 4 instances (0.00 ms)
+  XNR3D0BWP: 2 instances (0.00 ms)
+  XOR3D0BWP: 3 instances (0.00 ms)
+  AO222D0BWP: 3 instances (0.00 ms)
+  AOI222D0BWP: 15 instances (0.00 ms)
+  OAI222D0BWP: 7 instances (0.00 ms)
+  AO221D0BWP: 1 instances (0.00 ms)
+  OA221D0BWP: 8 instances (0.00 ms)
+  CKMUX2D0BWP: 3 instances (0.00 ms)
+  CKXOR2D0BWP: 7 instances (0.00 ms)
+  XNR2D0BWP: 11 instances (0.00 ms)
+  AOI221D0BWP: 13 instances (0.00 ms)
+  OAI221D0BWP: 11 instances (0.00 ms)
+  AOI32D0BWP: 3 instances (0.00 ms)
+  OAI32D0BWP: 3 instances (0.00 ms)
+  OA211D0BWP: 2 instances (0.00 ms)
+  OA31D0BWP: 2 instances (0.00 ms)
+  OR4D0BWP: 2 instances (0.00 ms)
+  IND4D0BWP: 1 instances (0.00 ms)
+  MUX2ND0BWP: 43 instances (0.00 ms)
+  AOI211D0BWP: 12 instances (0.00 ms)
+  AOI31D0BWP: 1 instances (0.00 ms)
+  OAI211D0BWP: 14 instances (0.00 ms)
+  OAI31D0BWP: 2 instances (0.00 ms)
+  AOI22D0BWP: 13 instances (0.00 ms)
+  OAI22D0BWP: 15 instances (0.00 ms)
+  ND4D0BWP: 5 instances (0.00 ms)
+  NR4D0BWP: 4 instances (0.00 ms)
+  OA21D0BWP: 6 instances (0.00 ms)
+  AN3D0BWP: 1 instances (0.00 ms)
+  IAO21D0BWP: 2 instances (0.00 ms)
+  IOA21D0BWP: 2 instances (0.00 ms)
+  IND3D0BWP: 1 instances (0.00 ms)
+  AOI21D0BWP: 8 instances (0.00 ms)
+  OAI21D0BWP: 24 instances (0.00 ms)
+  ND3D0BWP: 8 instances (0.00 ms)
+  NR3D0BWP: 1 instances (0.00 ms)
+  AN2D0BWP: 8 instances (0.00 ms)
+  OR2D0BWP: 5 instances (0.00 ms)
+  IND2D0BWP: 5 instances (0.00 ms)
+  INR2D0BWP: 5 instances (0.00 ms)
+  CKND2D0BWP: 36 instances (0.00 ms)
+  NR2D0BWP: 26 instances (0.00 ms)
+  CKND0BWP: 59 instances (0.00 ms)
+  Coverage: 3070/3070 (100.0%)  Time: 109.038 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.109140 s
+Instances:  407
+Coverage:   3070/3070 (100.00%)
+Memory:     6620 KB (7 MB) peak RSS
+Output:     output/flat/C3540.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C5315
+LIB: examples/lib/libc5315.sp
+TEST: examples/test/C5315.sp
+===============================
+[TIMING] qg_cache=0.3ms (35 gates, lazy)
+Parsing library: examples/lib/libc5315.sp
+Parsing source:  examples/test/C5315.sp
+
+=== EXTRACTION START ===
+
+Library gates:  35
+Source subckts: 1
+
+Processing: c5315 (4364 FETs)
+  [Prefix pre-pass] matched 3218 FETs
+  [Net-group pass]  matched 1146 FETs
+  XOR4D0BWP: 22 instances (0.00 ms)
+  MUX4ND0BWP: 28 instances (0.00 ms)
+  XNR3D0BWP: 3 instances (0.00 ms)
+  XOR3D0BWP: 4 instances (0.00 ms)
+  AOI222D0BWP: 20 instances (0.00 ms)
+  CKMUX2D0BWP: 7 instances (0.00 ms)
+  CKXOR2D0BWP: 30 instances (0.00 ms)
+  XNR2D0BWP: 10 instances (0.00 ms)
+  OAI221D0BWP: 41 instances (0.00 ms)
+  AO211D0BWP: 1 instances (0.00 ms)
+  AN4D0BWP: 1 instances (0.00 ms)
+  OR4D0BWP: 5 instances (0.00 ms)
+  MAOI22D0BWP: 8 instances (0.00 ms)
+  MOAI22D0BWP: 2 instances (0.00 ms)
+  INR4D0BWP: 1 instances (0.00 ms)
+  MUX2ND0BWP: 32 instances (0.00 ms)
+  AOI22D0BWP: 34 instances (0.00 ms)
+  OAI22D0BWP: 5 instances (0.00 ms)
+  NR4D0BWP: 4 instances (0.00 ms)
+  AO21D0BWP: 3 instances (0.00 ms)
+  OA21D0BWP: 5 instances (0.00 ms)
+  AN3D0BWP: 4 instances (0.00 ms)
+  OR3D0BWP: 4 instances (0.00 ms)
+  IOA21D0BWP: 3 instances (0.00 ms)
+  AOI21D0BWP: 16 instances (0.00 ms)
+  OAI21D0BWP: 12 instances (0.00 ms)
+  ND3D0BWP: 6 instances (0.00 ms)
+  NR3D0BWP: 2 instances (0.00 ms)
+  AN2D0BWP: 13 instances (0.00 ms)
+  OR2D0BWP: 2 instances (0.00 ms)
+  IND2D0BWP: 2 instances (0.00 ms)
+  INR2D0BWP: 8 instances (0.00 ms)
+  CKND2D0BWP: 22 instances (0.00 ms)
+  NR2D0BWP: 13 instances (0.00 ms)
+  CKND0BWP: 81 instances (0.00 ms)
+  Coverage: 4364/4364 (100.0%)  Time: 70.054 ms  COMPLETE
+
+=== FINAL SUMMARY ===
+Runtime:    0.070223 s
+Instances:  454
+Coverage:   4364/4364 (100.00%)
+Memory:     7528 KB (8 MB) peak RSS
+Output:     output/flat/C5315.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C6288
+LIB: examples/lib/libc6288.sp
+TEST: examples/test/C6288.sp
+===============================
+[TIMING] qg_cache=0.0ms (6 gates, lazy)
+Parsing library: examples/lib/libc6288.sp
+Parsing source:  examples/test/C6288.sp
+
+=== EXTRACTION START ===
+
+Library gates:  6
+Source subckts: 1
+
+Processing: c6288 (13004 FETs)
+  [Divide-and-conquer] batch=750
+  [Net-group pass]  matched 11772 FETs
+  [Loop 1] -> 8 instances
+  [Loop 2] -> 0 instances
+  Loops completed: 1
+  XOR2: 130 instances (0.00 ms)
+  AND2: 469 instances (0.00 ms)
+  OR2: 139 instances (0.00 ms)
+  NAND2: 916 instances (0.04 ms)
+  NOR2: 404 instances (0.00 ms)
+  INVX1: 646 instances (0.05 ms)
+  UNMATCHED (1224 FETs):
+    [35] M36 d=net11 g=n2210 s=net12
+    [36] M37 d=net11 g=net9 s=net10
+    [37] M38 d=net12 g=net10 s=VSS
+    [38] M39 d=net11 g=net9 s=net13
+    [40] M41 d=net10 g=n2210 s=net11
+    [43] M44 d=net13 g=net10 s=VDD
+    [285] M286 d=net81 g=n2274 s=net82
+    [286] M287 d=net81 g=net79 s=net80
+    [287] M288 d=net82 g=net80 s=VSS
+    [288] M289 d=net81 g=net79 s=net83
+    [290] M291 d=net80 g=n2274 s=net81
+    [293] M294 d=net83 g=net80 s=VDD
+    [345] M346 d=net98 g=n2249 s=net99
+    [346] M347 d=net98 g=net96 s=net97
+    [347] M348 d=net99 g=net97 s=VSS
+    [348] M349 d=net98 g=net96 s=net100
+    [350] M351 d=net97 g=n2249 s=net98
+    [353] M354 d=net100 g=net97 s=VDD
+    [365] M366 d=net105 g=n2282 s=net106
+    [366] M367 d=net105 g=net103 s=net104
+    [367] M368 d=net106 g=net104 s=VSS
+    [368] M369 d=net105 g=net103 s=net107
+    [370] M371 d=net104 g=n2282 s=net105
+    [373] M374 d=net107 g=net104 s=VDD
+    [397] M398 d=net116 g=n2260 s=net117
+    [398] M399 d=net116 g=net114 s=net115
+    [399] M400 d=net117 g=net115 s=VSS
+    [400] M401 d=net116 g=net114 s=net118
+    [402] M403 d=net115 g=n2260 s=net116
+    [405] M406 d=net118 g=net115 s=VDD
+    [415] M416 d=net122 g=n2261 s=net123
+    [416] M417 d=net122 g=net120 s=net121
+    [417] M418 d=net123 g=net121 s=VSS
+    [418] M419 d=net122 g=net120 s=net124
+    [420] M421 d=net121 g=n2261 s=net122
+    [423] M424 d=net124 g=net121 s=VDD
+    [495] M496 d=net144 g=n2278 s=net145
+    [496] M497 d=net144 g=net142 s=net143
+    [497] M498 d=net145 g=net143 s=VSS
+    [498] M499 d=net144 g=net142 s=net146
+    [500] M501 d=net143 g=n2278 s=net144
+    [503] M504 d=net146 g=net143 s=VDD
+    [557] M558 d=net161 g=n2290 s=net162
+    [558] M559 d=net161 g=net159 s=net160
+    [559] M560 d=net162 g=net160 s=VSS
+    [560] M561 d=net161 g=net159 s=net163
+    [562] M563 d=net160 g=n2290 s=net161
+    [565] M566 d=net163 g=net160 s=VDD
+    [577] M578 d=net168 g=n2293 s=net169
+    [578] M579 d=net168 g=net166 s=net167
+  Coverage: 11780/13004 (90.6%)  Time: 246.856 ms  PARTIAL
+
+=== FINAL SUMMARY ===
+Runtime:    0.247532 s
+Instances:  2704
+Coverage:   11780/13004 (90.59%)
+Memory:     13552 KB (14 MB) peak RSS
+Output:     output/flat/C6288.v
+
+=== EXTRACTION COMPLETE ===
+
+
+===============================
+DESIGN: C6288_1
+LIB: examples/lib/libc6288_1.sp
+TEST: examples/test/C6288_1.sp
+===============================
+[TIMING] qg_cache=0.0ms (6 gates, lazy)
+Parsing library: examples/lib/libc6288_1.sp
+Parsing source:  examples/test/C6288_1.sp
+
+=== EXTRACTION START ===
+
+Library gates:  6
+Source subckts: 1
+
+Processing: c6288 (13004 FETs)
+  [Divide-and-conquer] batch=750
+  [Net-group pass]  matched 11772 FETs
+  [Loop 1] -> 8 instances
+  [Loop 2] -> 0 instances
+  Loops completed: 1
+  XOR2: 130 instances (0.00 ms)
+  AND2: 469 instances (0.00 ms)
+  OR2: 139 instances (0.00 ms)
+  NAND2: 916 instances (0.04 ms)
+  NOR2: 404 instances (0.00 ms)
+  INVX1: 646 instances (0.06 ms)
+  UNMATCHED (1224 FETs):
+    [35] M36 d=net11 g=n2210 s=net12
+    [36] M37 d=net11 g=net9 s=net10
+    [37] M38 d=net12 g=net10 s=VSS
+    [38] M39 d=net11 g=net9 s=net13
+    [40] M41 d=net10 g=n2210 s=net11
+    [43] M44 d=net13 g=net10 s=VDD
+    [285] M286 d=net81 g=n2274 s=net82
+    [286] M287 d=net81 g=net79 s=net80
+    [287] M288 d=net82 g=net80 s=VSS
+    [288] M289 d=net81 g=net79 s=net83
+    [290] M291 d=net80 g=n2274 s=net81
+    [293] M294 d=net83 g=net80 s=VDD
+    [345] M346 d=net98 g=n2249 s=net99
+    [346] M347 d=net98 g=net96 s=net97
+    [347] M348 d=net99 g=net97 s=VSS
+    [348] M349 d=net98 g=net96 s=net100
+    [350] M351 d=net97 g=n2249 s=net98
+    [353] M354 d=net100 g=net97 s=VDD
+    [365] M366 d=net105 g=n2282 s=net106
+    [366] M367 d=net105 g=net103 s=net104
+    [367] M368 d=net106 g=net104 s=VSS
+    [368] M369 d=net105 g=net103 s=net107
+    [370] M371 d=net104 g=n2282 s=net105
+    [373] M374 d=net107 g=net104 s=VDD
+    [397] M398 d=net116 g=n2260 s=net117
+    [398] M399 d=net116 g=net114 s=net115
+    [399] M400 d=net117 g=net115 s=VSS
+    [400] M401 d=net116 g=net114 s=net118
+    [402] M403 d=net115 g=n2260 s=net116
+    [405] M406 d=net118 g=net115 s=VDD
+    [415] M416 d=net122 g=n2261 s=net123
+    [416] M417 d=net122 g=net120 s=net121
+    [417] M418 d=net123 g=net121 s=VSS
+    [418] M419 d=net122 g=net120 s=net124
+    [420] M421 d=net121 g=n2261 s=net122
+    [423] M424 d=net124 g=net121 s=VDD
+    [495] M496 d=net144 g=n2278 s=net145
+    [496] M497 d=net144 g=net142 s=net143
+    [497] M498 d=net145 g=net143 s=VSS
+    [498] M499 d=net144 g=net142 s=net146
+    [500] M501 d=net143 g=n2278 s=net144
+    [503] M504 d=net146 g=net143 s=VDD
+    [557] M558 d=net161 g=n2290 s=net162
+    [558] M559 d=net161 g=net159 s=net160
+    [559] M560 d=net162 g=net160 s=VSS
+    [560] M561 d=net161 g=net159 s=net163
+    [562] M563 d=net160 g=n2290 s=net161
+    [565] M566 d=net163 g=net160 s=VDD
+    [577] M578 d=net168 g=n2293 s=net169
+    [578] M579 d=net168 g=net166 s=net167
+  Coverage: 11780/13004 (90.6%)  Time: 243.419 ms  PARTIAL
+
+=== FINAL SUMMARY ===
+Runtime:    0.244066 s
+Instances:  2704
+Coverage:   11780/13004 (90.59%)
+Memory:     13680 KB (14 MB) peak RSS
+Output:     output/flat/C6288_1.v
+
+=== EXTRACTION COMPLETE ===
+
+
