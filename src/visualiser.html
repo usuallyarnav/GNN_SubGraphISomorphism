@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Circuit Graph Visualiser</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap');
+
+  :root {
+    --bg:        #0a0b0e;
+    --panel:     #0f1117;
+    --border:    #1e2130;
+    --border-hi: #2e3450;
+    --accent:    #4af0b4;
+    --accent2:   #6c8eff;
+    --warn:      #f0a04a;
+    --danger:    #f05a4a;
+    --text:      #c8cfe8;
+    --text-dim:  #5a6380;
+    --text-mid:  #8892b0;
+
+    /* node colours */
+    --c-signal:  #6c8eff;
+    --c-vdd:     #f05a4a;
+    --c-gnd:     #8892b0;
+    --c-pmos:    #4af0b4;
+    --c-nmos:    #f0d04a;
+    --c-unknown: #cc77ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── Header ──────────────────────────────────────────────── */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    background: var(--panel);
+  }
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .header-sep { width: 1px; height: 20px; background: var(--border); }
+  .file-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--border-hi);
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-mid);
+    transition: border-color .2s, color .2s;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  .file-label:hover { border-color: var(--accent); color: var(--accent); }
+  .file-label svg { width:14px; height:14px; stroke: currentColor; fill:none; stroke-width:2; }
+  #fileInput { display: none; }
+  #filename { color: var(--text-mid); font-size: 11px; }
+
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .stat-chip {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+  }
+  .stat-chip b { color: var(--text); font-weight: 500; }
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  .workspace {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── Sidebar ─────────────────────────────────────────────── */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--panel);
+  }
+  .sidebar-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 9px 0;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+  }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-panel { display: none; flex: 1; overflow-y: auto; padding: 12px; flex-direction: column; gap: 8px; }
+  .tab-panel.active { display: flex; }
+
+  /* Legend */
+  .legend-group { margin-bottom: 10px; }
+  .legend-title {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background .15s;
+    user-select: none;
+  }
+  .legend-row:hover { background: rgba(255,255,255,.03); }
+  .legend-row.dimmed { opacity: .35; }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+    box-shadow: 0 0 6px currentColor;
+  }
+  .legend-row span { font-size: 11px; color: var(--text-mid); }
+  .legend-row small { margin-left: auto; font-size: 9px; color: var(--text-dim); }
+
+  /* Node inspector */
+  .inspector-empty {
+    display: flex; align-items: center; justify-content: center;
+    height: 80px;
+    color: var(--text-dim);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+  }
+  .insp-section { margin-bottom: 10px; }
+  .insp-label {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .insp-name {
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+    color: var(--accent);
+    word-break: break-all;
+  }
+  .insp-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .insp-kv { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .insp-kv:last-child { border-bottom: none; }
+  .insp-k { color: var(--text-dim); font-size: 10px; }
+  .insp-v { color: var(--text); font-size: 10px; text-align: right; }
+  .edge-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 6px;
+    margin: 2px;
+    border-radius: 2px;
+    font-size: 9px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
+    color: var(--text-mid);
+  }
+  .edge-chip .dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  /* Edge list tab */
+  .edge-filter {
+    display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px;
+  }
+  .ef-chip {
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-size: 9px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    color: var(--text-dim);
+    transition: all .15s;
+    letter-spacing: 0.04em;
+  }
+  .ef-chip.on { background: rgba(74,240,180,.12); border-color: var(--accent); color: var(--accent); }
+  .edge-list { display: flex; flex-direction: column; gap: 3px; overflow-y: auto; }
+  .edge-row {
+    display: flex; align-items: center; gap: 6px;
+    padding: 5px 6px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    font-size: 10px;
+    transition: background .1s, border-color .1s;
+    cursor: default;
+  }
+  .edge-row:hover { background: rgba(255,255,255,.03); border-color: var(--border); }
+  .er-type {
+    width: 22px; text-align: center;
+    padding: 1px 0;
+    border-radius: 2px;
+    font-size: 9px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .er-arrow { color: var(--text-dim); }
+  .er-name { flex: 1; color: var(--text-mid); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* Warn banner */
+  .warn-banner {
+    margin: 8px 0;
+    padding: 8px 10px;
+    border: 1px solid rgba(240,160,74,.3);
+    border-radius: 3px;
+    background: rgba(240,160,74,.05);
+    font-size: 10px;
+    color: var(--warn);
+    line-height: 1.6;
+  }
+  .warn-banner b { display: block; margin-bottom: 4px; }
+
+  /* ── Canvas ──────────────────────────────────────────────── */
+  .canvas-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(108,142,255,.04) 0%, transparent 55%),
+      radial-gradient(circle at 80% 70%, rgba(74,240,180,.03) 0%, transparent 50%);
+  }
+  svg#graph {
+    width: 100%; height: 100%;
+    cursor: grab;
+  }
+  svg#graph:active { cursor: grabbing; }
+
+  .grid-line { stroke: #1a1d2b; stroke-width: 1; }
+
+  /* SVG node/edge styles */
+  .link {
+    stroke-opacity: .55;
+    fill: none;
+    marker-end: url(#arrow);
+  }
+  .link.fwd   { stroke: var(--accent2); }
+  .link.rev   { stroke: var(--accent); stroke-dasharray: 4 3; }
+  .link.power { stroke: var(--danger); }
+
+  .node circle {
+    stroke-width: 1.5;
+    transition: filter .15s;
+  }
+  .node circle.hovered { filter: drop-shadow(0 0 8px currentColor); }
+  .node text {
+    fill: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    pointer-events: none;
+    dominant-baseline: central;
+  }
+
+  /* ── Controls ────────────────────────────────────────────── */
+  .controls {
+    position: absolute;
+    bottom: 16px; right: 16px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .ctrl-btn {
+    width: 32px; height: 32px;
+    background: var(--panel);
+    border: 1px solid var(--border-hi);
+    border-radius: 4px;
+    color: var(--text-mid);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .15s, color .15s;
+    font-family: monospace;
+  }
+  .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Drop overlay ────────────────────────────────────────── */
+  #dropOverlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 14px;
+    background: var(--bg);
+    z-index: 10;
+    transition: opacity .3s;
+  }
+  #dropOverlay.hidden { opacity: 0; pointer-events: none; }
+  .drop-icon { font-size: 48px; opacity: .3; }
+  .drop-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-mid);
+    letter-spacing: 0.04em;
+  }
+  .drop-sub { font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; }
+  .drop-btn {
+    padding: 8px 20px;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    background: rgba(74,240,180,.08);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .drop-btn:hover { background: rgba(74,240,180,.16); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <h1>Circuit Visualiser</h1>
+  <div class="header-sep"></div>
+  <label class="file-label" for="fileInput">
+    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+    Load JSON
+  </label>
+  <input type="file" id="fileInput" accept=".json"/>
+  <span id="filename">no file loaded</span>
+  <div class="header-right">
+    <div class="stat-chip">NODES <b id="statNodes">—</b></div>
+    <div class="stat-chip">EDGES <b id="statEdges">—</b></div>
+    <div class="stat-chip">PMOS <b id="statPMOS">—</b></div>
+    <div class="stat-chip">NMOS <b id="statNMOS">—</b></div>
+  </div>
+</header>
+
+<!-- ── Workspace ── -->
+<div class="workspace">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-tabs">
+      <button class="tab-btn active" data-tab="legend">Legend</button>
+      <button class="tab-btn" data-tab="inspector">Node</button>
+      <button class="tab-btn" data-tab="edges">Edges</button>
+    </div>
+
+    <!-- Legend tab -->
+    <div class="tab-panel active" id="tab-legend">
+      <div class="legend-group">
+        <div class="legend-title">Node Types</div>
+        <div class="legend-row" data-filter="signal">
+          <div class="legend-dot" style="background:var(--c-signal);color:var(--c-signal)"></div>
+          <span>Signal Net</span><small>type 0</small>
+        </div>
+        <div class="legend-row" data-filter="vdd">
+          <div class="legend-dot" style="background:var(--c-vdd);color:var(--c-vdd)"></div>
+          <span>VDD / Power</span><small>type 1</small>
+        </div>
+        <div class="legend-row" data-filter="gnd">
+          <div class="legend-dot" style="background:var(--c-gnd);color:var(--c-gnd)"></div>
+          <span>GND / Ground</span><small>type 2</small>
+        </div>
+        <div class="legend-row" data-filter="pmos">
+          <div class="legend-dot" style="background:var(--c-pmos);color:var(--c-pmos)"></div>
+          <span>PMOS</span><small>type 8</small>
+        </div>
+        <div class="legend-row" data-filter="nmos">
+          <div class="legend-dot" style="background:var(--c-nmos);color:var(--c-nmos)"></div>
+          <span>NMOS</span><small>type 9</small>
+        </div>
+      </div>
+      <div class="legend-group">
+        <div class="legend-title">Edge Types</div>
+        <div class="legend-row">
+          <svg width="36" height="12" style="flex-shrink:0"><line x1="2" y1="6" x2="28" y2="6" stroke="var(--accent2)" stroke-width="1.5" marker-end="url(#arrow-legend)"/><defs><marker id="arrow-legend" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="var(--accent2)"/></marker></defs></svg>
+          <span>Forward (Net→MOS)</span>
+        </div>
+        <div class="legend-row">
+          <svg width="36" height="12" style="flex-shrink:0"><line x1="2" y1="6" x2="28" y2="6" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
+          <span>Reverse (MOS→Net)</span>
+        </div>
+        <div class="legend-row">
+          <svg width="36" height="12" style="flex-shrink:0"><line x1="2" y1="6" x2="28" y2="6" stroke="var(--danger)" stroke-width="1.5"/></svg>
+          <span>Power (no reverse)</span>
+        </div>
+      </div>
+      <div class="legend-group">
+        <div class="legend-title">Edge Class Ranges</div>
+        <div class="insp-kv"><span class="insp-k">0–3</span><span class="insp-v" style="color:var(--c-pmos)">PMOS D/G/S/B fwd</span></div>
+        <div class="insp-kv"><span class="insp-k">4–7</span><span class="insp-v" style="color:var(--c-nmos)">NMOS D/G/S/B fwd</span></div>
+        <div class="insp-kv"><span class="insp-k">14–17</span><span class="insp-v" style="color:var(--c-pmos)">PMOS D/G/S/B rev</span></div>
+        <div class="insp-kv"><span class="insp-k">18–21</span><span class="insp-v" style="color:var(--c-nmos)">NMOS D/G/S/B rev</span></div>
+      </div>
+    </div>
+
+    <!-- Inspector tab -->
+    <div class="tab-panel" id="tab-inspector">
+      <div class="inspector-empty" id="inspEmpty">click a node</div>
+      <div id="inspContent" style="display:none"></div>
+    </div>
+
+    <!-- Edges tab -->
+    <div class="tab-panel" id="tab-edges">
+      <div class="edge-filter" id="edgeFilter"></div>
+      <div class="edge-list" id="edgeList"></div>
+    </div>
+  </div>
+
+  <!-- Canvas -->
+  <div class="canvas-wrap" id="canvasWrap">
+    <div id="dropOverlay">
+      <div class="drop-icon">⬡</div>
+      <div class="drop-title">Circuit Graph Visualiser</div>
+      <div class="drop-sub">Drop a parser JSON file here, or</div>
+      <label class="drop-btn" for="fileInput">Browse file</label>
+      <div class="drop-sub" style="margin-top:4px">Supports parser.py output format</div>
+    </div>
+
+    <svg id="graph">
+      <defs>
+        <marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L0,7 L7,3.5 z" fill="#444e70"/>
+        </marker>
+        <marker id="arrow-fwd" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L0,7 L7,3.5 z" fill="var(--accent2)"/>
+        </marker>
+        <marker id="arrow-rev" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L0,7 L7,3.5 z" fill="var(--accent)"/>
+        </marker>
+        <marker id="arrow-pwr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L0,7 L7,3.5 z" fill="var(--danger)"/>
+        </marker>
+      </defs>
+      <g id="gridGroup"></g>
+      <g id="zoomGroup">
+        <g id="linkGroup"></g>
+        <g id="nodeGroup"></g>
+      </g>
+    </svg>
+
+    <div class="controls">
+      <button class="ctrl-btn" id="btnZoomIn"  title="Zoom in">+</button>
+      <button class="ctrl-btn" id="btnZoomOut" title="Zoom out">−</button>
+      <button class="ctrl-btn" id="btnFit"     title="Fit to view">⊡</button>
+      <button class="ctrl-btn" id="btnReset"   title="Reset layout">↺</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Constants ────────────────────────────────────────────────────────────────
+const NODE_COLOR = { 0:'#6c8eff', 1:'#f05a4a', 2:'#8892b0', 8:'#4af0b4', 9:'#f0d04a' };
+const NODE_LABEL = { 0:'SIG', 1:'VDD', 2:'GND', 8:'PMOS', 9:'NMOS' };
+const NODE_R     = { 0:9, 1:10, 2:10, 8:14, 9:14 };
+
+const PIN_NAMES = ['D','G','S','B'];
+function edgeLabel(t) {
+  if (t >= 0  && t <= 3)  return `P-${PIN_NAMES[t]}-fwd`;
+  if (t >= 4  && t <= 7)  return `N-${PIN_NAMES[t-4]}-fwd`;
+  if (t >= 14 && t <= 17) return `P-${PIN_NAMES[t-14]}-rev`;
+  if (t >= 18 && t <= 21) return `N-${PIN_NAMES[t-18]}-rev`;
+  return `type-${t}`;
+}
+function edgeClass(et, srcType, tgtType) {
+  const isPwr = srcType === 1 || srcType === 2 || tgtType === 1 || tgtType === 2;
+  if (isPwr) return 'power';
+  return (et < 14) ? 'fwd' : 'rev';
+}
+function fmtSI(v) {
+  if (v === null || v === undefined) return '—';
+  if (v === 0) return '0';
+  const abs = Math.abs(v);
+  if (abs >= 1e-3) return (v*1e3).toPrecision(3) + ' mm';
+  if (abs >= 1e-6) return (v*1e6).toPrecision(3) + ' µm';
+  if (abs >= 1e-9) return (v*1e9).toPrecision(3) + ' nm';
+  return v.toExponential(2) + ' m';
+}
+
+// ── State ────────────────────────────────────────────────────────────────────
+let graphData   = null;
+let simulation  = null;
+let zoomBeh     = null;
+let hiddenTypes = new Set();
+
+// ── D3 setup ─────────────────────────────────────────────────────────────────
+const svg       = d3.select('#graph');
+const zoomGroup = d3.select('#zoomGroup');
+const linkGroup = d3.select('#linkGroup');
+const nodeGroup = d3.select('#nodeGroup');
+
+zoomBeh = d3.zoom()
+  .scaleExtent([0.05, 6])
+  .on('zoom', e => zoomGroup.attr('transform', e.transform));
+svg.call(zoomBeh).on('dblclick.zoom', null);
+
+// ── File loading ─────────────────────────────────────────────────────────────
+document.getElementById('fileInput').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  document.getElementById('filename').textContent = f.name;
+  f.text().then(txt => { try { loadGraph(JSON.parse(txt)); } catch(ex) { alert('Invalid JSON: ' + ex.message); } });
+  e.target.value = '';
+});
+
+const canvasWrap = document.getElementById('canvasWrap');
+canvasWrap.addEventListener('dragover', e => { e.preventDefault(); });
+canvasWrap.addEventListener('drop', e => {
+  e.preventDefault();
+  const f = e.dataTransfer.files[0]; if (!f) return;
+  document.getElementById('filename').textContent = f.name;
+  f.text().then(txt => { try { loadGraph(JSON.parse(txt)); } catch(ex) { alert('Invalid JSON: ' + ex.message); } });
+});
+
+// ── Load & render ─────────────────────────────────────────────────────────────
+function loadGraph(data) {
+  graphData = data;
+
+  const names  = data.id_to_node_name   || {};
+  const types  = data.node_type         || [];
+  const dims   = data.node_dimensions   || {};
+  const eiSrc  = data.edge_index[0]     || [];
+  const eiTgt  = data.edge_index[1]     || [];
+  const etypes = data.edge_type         || [];
+  const unk    = data.unknown_models    || [];
+
+  // Build node objects
+  const nodes = types.map((t, i) => ({
+    id:    i,
+    name:  names[i] || `node_${i}`,
+    type:  t,
+    dim:   dims[i] || dims[String(i)] || null,
+  }));
+
+  // Build edge objects
+  const links = eiSrc.map((s, i) => ({
+    id:      i,
+    source:  s,
+    target:  eiTgt[i],
+    etype:   etypes[i],
+  }));
+
+  // Header stats
+  document.getElementById('statNodes').textContent = nodes.length;
+  document.getElementById('statEdges').textContent = links.length;
+  document.getElementById('statPMOS').textContent  = nodes.filter(n=>n.type===8).length;
+  document.getElementById('statNMOS').textContent  = nodes.filter(n=>n.type===9).length;
+
+  // Unknown models banner
+  if (unk.length) {
+    const existing = document.getElementById('unkBanner');
+    if (existing) existing.remove();
+    const banner = document.createElement('div');
+    banner.id = 'unkBanner';
+    banner.className = 'warn-banner';
+    banner.innerHTML = `<b>⚠ ${unk.length} Unknown Model(s)</b>` +
+      unk.map(u=>`<div>${u.transistor}: <span style="color:var(--text)">${u.model}</span></div>`).join('');
+    document.getElementById('tab-legend').prepend(banner);
+  }
+
+  // Build edge list tab
+  buildEdgeTab(links, nodes);
+
+  // Drop overlay
+  document.getElementById('dropOverlay').classList.add('hidden');
+
+  // Render
+  renderGraph(nodes, links);
+}
+
+// ── Edge tab ──────────────────────────────────────────────────────────────────
+function buildEdgeTab(links, nodes) {
+  const typeSet = [...new Set(links.map(l => l.etype))].sort((a,b)=>a-b);
+  const filterEl = document.getElementById('edgeFilter');
+  const listEl   = document.getElementById('edgeList');
+  filterEl.innerHTML = '';
+
+  // "All" chip
+  const allChip = document.createElement('div');
+  allChip.className = 'ef-chip on';
+  allChip.textContent = 'ALL';
+  allChip.dataset.t = 'all';
+  filterEl.appendChild(allChip);
+
+  let activeFilter = new Set(['all']);
+  typeSet.forEach(t => {
+    const c = document.createElement('div');
+    c.className = 'ef-chip';
+    c.textContent = edgeLabel(t);
+    c.dataset.t = t;
+    filterEl.appendChild(c);
+  });
+
+  filterEl.addEventListener('click', e => {
+    const chip = e.target.closest('.ef-chip'); if (!chip) return;
+    const t = chip.dataset.t;
+    if (t === 'all') {
+      activeFilter = new Set(['all']);
+      filterEl.querySelectorAll('.ef-chip').forEach(c => c.classList.remove('on'));
+      chip.classList.add('on');
+    } else {
+      activeFilter.delete('all');
+      filterEl.querySelector('[data-t="all"]').classList.remove('on');
+      if (chip.classList.toggle('on')) activeFilter.add(t);
+      else activeFilter.delete(t);
+      if (!activeFilter.size) { activeFilter.add('all'); filterEl.querySelector('[data-t="all"]').classList.add('on'); }
+    }
+    renderEdgeList();
+  });
+
+  function renderEdgeList() {
+    listEl.innerHTML = '';
+    const filtered = (activeFilter.has('all'))
+      ? links
+      : links.filter(l => activeFilter.has(String(l.etype)));
+    filtered.forEach(l => {
+      const src  = nodes[l.source];
+      const tgt  = nodes[l.target];
+      const ec   = edgeClass(l.etype, src?.type, tgt?.type);
+      const col  = ec==='fwd' ? 'var(--accent2)' : ec==='rev' ? 'var(--accent)' : 'var(--danger)';
+      const row  = document.createElement('div');
+      row.className = 'edge-row';
+      row.innerHTML = `
+        <div class="er-type" style="background:${col}22;color:${col}">${l.etype}</div>
+        <div class="er-name" style="color:${NODE_COLOR[src?.type]||'#fff'}">${src?.name||l.source}</div>
+        <div class="er-arrow">→</div>
+        <div class="er-name" style="color:${NODE_COLOR[tgt?.type]||'#fff'}">${tgt?.name||l.target}</div>
+      `;
+      listEl.appendChild(row);
+    });
+  }
+  renderEdgeList();
+}
+
+// ── Force simulation ──────────────────────────────────────────────────────────
+function renderGraph(nodes, links) {
+  if (simulation) simulation.stop();
+
+  linkGroup.selectAll('*').remove();
+  nodeGroup.selectAll('*').remove();
+
+  const W = canvasWrap.clientWidth;
+  const H = canvasWrap.clientHeight;
+
+  // Deduplicate parallel edges with a curve offset
+  const pairCount = {};
+  links.forEach(l => {
+    const key = [Math.min(l.source,l.target), Math.max(l.source,l.target)].join('-');
+    pairCount[key] = (pairCount[key]||0) + 1;
+    l._pairKey = key;
+    l._pairIdx = pairCount[key];
+  });
+  Object.keys(pairCount).forEach(k => {
+    const total = pairCount[k];
+    links.filter(l=>l._pairKey===k).forEach((l,i)=>{ l._pairTotal=total; l._pairI=i; });
+  });
+
+  // Links
+  const link = linkGroup.selectAll('path')
+    .data(links)
+    .join('path')
+    .attr('class', d => {
+      const sType = nodes[d.source]?.type;
+      const tType = nodes[d.target]?.type;
+      return 'link ' + edgeClass(d.etype, sType, tType);
+    })
+    .attr('marker-end', d => {
+      const sType = nodes[d.source]?.type;
+      const tType = nodes[d.target]?.type;
+      const ec = edgeClass(d.etype, sType, tType);
+      return ec==='fwd' ? 'url(#arrow-fwd)' : ec==='rev' ? 'url(#arrow-rev)' : 'url(#arrow-pwr)';
+    })
+    .attr('stroke-width', 1.2)
+    .append('title').text(d => `[${edgeLabel(d.etype)}] ${nodes[d.source]?.name} → ${nodes[d.target]?.name}`);
+
+  const linkPaths = linkGroup.selectAll('path');
+
+  // Nodes
+  const node = nodeGroup.selectAll('g')
+    .data(nodes)
+    .join('g')
+    .attr('class', 'node')
+    .style('cursor', 'pointer')
+    .call(d3.drag()
+      .on('start', (e,d) => { if(!e.active) simulation.alphaTarget(.3).restart(); d.fx=d.x; d.fy=d.y; })
+      .on('drag',  (e,d) => { d.fx=e.x; d.fy=e.y; })
+      .on('end',   (e,d) => { if(!e.active) simulation.alphaTarget(0); d.fx=null; d.fy=null; })
+    )
+    .on('click', (e,d) => { e.stopPropagation(); showInspector(d, nodes, links); })
+    .on('mouseenter', (e,d) => { d3.select(e.currentTarget).select('circle').classed('hovered',true); highlightNeighbours(d, links); })
+    .on('mouseleave', (e,d) => { d3.select(e.currentTarget).select('circle').classed('hovered',false); clearHighlight(); });
+
+  node.append('circle')
+    .attr('r', d => NODE_R[d.type] || 10)
+    .attr('fill', d => (NODE_COLOR[d.type]||'#888') + '22')
+    .attr('stroke', d => NODE_COLOR[d.type]||'#888')
+    .style('color', d => NODE_COLOR[d.type]||'#888');
+
+  // Label
+  node.append('text')
+    .attr('dy', d => (NODE_R[d.type]||10) + 10)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', d => (d.type===8||d.type===9) ? 9 : 8)
+    .attr('fill', d => NODE_COLOR[d.type]||'#888')
+    .attr('opacity', .85)
+    .text(d => { const n = d.name; return n.length > 14 ? n.slice(-13)+'…' : n; });
+
+  // Type badge inside circle (for MOS)
+  node.filter(d=>d.type===8||d.type===9)
+    .append('text')
+    .attr('text-anchor','middle')
+    .attr('font-size', 7)
+    .attr('font-weight','700')
+    .attr('fill', d=>NODE_COLOR[d.type])
+    .attr('opacity',.9)
+    .text(d=>d.type===8?'P':'N');
+
+  svg.on('click', () => clearInspector());
+
+  // Simulation
+  simulation = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(d => {
+      const sT = nodes[d.source.id??d.source]?.type;
+      const tT = nodes[d.target.id??d.target]?.type;
+      return (sT===8||sT===9||tT===8||tT===9) ? 80 : 60;
+    }).strength(.4))
+    .force('charge', d3.forceManyBody().strength(d => (d.type===8||d.type===9)?-220:-140))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collide', d3.forceCollide().radius(d=>(NODE_R[d.type]||10)+18))
+    .on('tick', ticked);
+
+  function ticked() {
+    linkPaths.attr('d', d => {
+      const sx = d.source.x, sy = d.source.y;
+      const tx = d.target.x, ty = d.target.y;
+      const dx = tx-sx, dy = ty-sy;
+      const dr = Math.sqrt(dx*dx+dy*dy);
+
+      // Shorten so arrowhead doesn't overlap node
+      const tR  = (NODE_R[d.target.type||nodes[d.target]?.type]||10) + 4;
+      const ratio = (dr-tR) / (dr||1);
+      const ex = sx + dx*ratio, ey = sy + dy*ratio;
+
+      // Curve for parallel edges
+      if (d._pairTotal > 1) {
+        const offset = (d._pairI - (d._pairTotal-1)/2) * 18;
+        const mx = (sx+ex)/2 - dy/dr*offset;
+        const my = (sy+ey)/2 + dx/dr*offset;
+        return `M${sx},${sy} Q${mx},${my} ${ex},${ey}`;
+      }
+      return `M${sx},${sy} L${ex},${ey}`;
+    });
+
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+  }
+
+  // Fit after layout settles
+  setTimeout(() => fitView(nodes), 800);
+}
+
+// ── Highlight helpers ─────────────────────────────────────────────────────────
+function highlightNeighbours(d, links) {
+  const nbrs = new Set([d.id]);
+  links.forEach(l => {
+    const s = l.source.id??l.source, t = l.target.id??l.target;
+    if (s===d.id) nbrs.add(t);
+    if (t===d.id) nbrs.add(s);
+  });
+  nodeGroup.selectAll('.node').style('opacity', n => nbrs.has(n.id) ? 1 : 0.15);
+  linkGroup.selectAll('path').style('opacity', l => {
+    const s=l.source.id??l.source, t=l.target.id??l.target;
+    return (s===d.id||t===d.id) ? 0.9 : 0.05;
+  });
+}
+function clearHighlight() {
+  nodeGroup.selectAll('.node').style('opacity', 1);
+  linkGroup.selectAll('path').style('opacity', null);
+}
+
+// ── Inspector ─────────────────────────────────────────────────────────────────
+function showInspector(d, nodes, links) {
+  switchTab('inspector');
+  document.getElementById('inspEmpty').style.display   = 'none';
+  document.getElementById('inspContent').style.display = 'block';
+
+  const col   = NODE_COLOR[d.type] || '#888';
+  const label = NODE_LABEL[d.type] || `type-${d.type}`;
+
+  const connEdges = links.filter(l => {
+    const s=l.source.id??l.source, t=l.target.id??l.target;
+    return s===d.id || t===d.id;
+  });
+
+  const dims = d.dim || {};
+  let html = `
+    <div class="insp-section">
+      <div class="insp-label">Name</div>
+      <div class="insp-name">${d.name}</div>
+      <div class="insp-badge" style="background:${col}22;color:${col}">${label}</div>
+    </div>
+    <div class="insp-section">
+      <div class="insp-label">Properties</div>
+      <div class="insp-kv"><span class="insp-k">Node ID</span><span class="insp-v">${d.id}</span></div>
+      <div class="insp-kv"><span class="insp-k">Type code</span><span class="insp-v">${d.type}</span></div>
+  `;
+  if (d.type===8||d.type===9) {
+    html += `
+      <div class="insp-kv"><span class="insp-k">W</span><span class="insp-v">${fmtSI(dims.w)}</span></div>
+      <div class="insp-kv"><span class="insp-k">L</span><span class="insp-v">${fmtSI(dims.l)}</span></div>
+      <div class="insp-kv"><span class="insp-k">W/L</span><span class="insp-v">${(dims.w&&dims.l) ? (dims.w/dims.l).toFixed(2) : '—'}</span></div>
+    `;
+  }
+  html += `</div>`;
+
+  // Connections
+  if (connEdges.length) {
+    html += `<div class="insp-section"><div class="insp-label">Connections (${connEdges.length})</div>`;
+    connEdges.forEach(l => {
+      const s=l.source.id??l.source, t=l.target.id??l.target;
+      const other = (s===d.id) ? nodes[t] : nodes[s];
+      const dir   = (s===d.id) ? '→' : '←';
+      const ec    = edgeClass(l.etype, nodes[s]?.type, nodes[t]?.type);
+      const col2  = ec==='fwd'?'var(--accent2)':ec==='rev'?'var(--accent)':'var(--danger)';
+      const oCol  = NODE_COLOR[other?.type] || '#888';
+      html += `<div class="edge-chip">
+        <div class="dot" style="background:${col2}"></div>
+        <span style="color:${col2}">${edgeLabel(l.etype)}</span>
+        <span>${dir}</span>
+        <span style="color:${oCol}">${other?.name||'?'}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  document.getElementById('inspContent').innerHTML = html;
+}
+function clearInspector() {
+  document.getElementById('inspEmpty').style.display   = 'flex';
+  document.getElementById('inspContent').style.display = 'none';
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab===name));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id===`tab-${name}`));
+}
+document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+
+// ── Legend filter (dim nodes) ─────────────────────────────────────────────────
+document.querySelectorAll('.legend-row[data-filter]').forEach(row => {
+  const filterMap = { signal:0, vdd:1, gnd:2, pmos:8, nmos:9 };
+  row.addEventListener('click', () => {
+    const t = filterMap[row.dataset.filter];
+    row.classList.toggle('dimmed');
+    if (row.classList.contains('dimmed')) hiddenTypes.add(t); else hiddenTypes.delete(t);
+    nodeGroup.selectAll('.node').style('display', d => hiddenTypes.has(d.type) ? 'none' : null);
+    linkGroup.selectAll('path').style('display', l => {
+      const s = l.source.id??l.source, t2 = l.target.id??l.target;
+      const sT = (typeof l.source==='object'?l.source:graphData?.node_type?.[l.source]);
+      const tT = (typeof l.target==='object'?l.target:graphData?.node_type?.[l.target]);
+      const sType = typeof l.source==='object' ? l.source.type : (graphData?.node_type?.[l.source]);
+      const tType = typeof l.target==='object' ? l.target.type : (graphData?.node_type?.[l.target]);
+      return (hiddenTypes.has(sType)||hiddenTypes.has(tType)) ? 'none' : null;
+    });
+  });
+});
+
+// ── Zoom controls ─────────────────────────────────────────────────────────────
+document.getElementById('btnZoomIn').addEventListener('click',  () => svg.transition().duration(250).call(zoomBeh.scaleBy, 1.4));
+document.getElementById('btnZoomOut').addEventListener('click', () => svg.transition().duration(250).call(zoomBeh.scaleBy, 1/1.4));
+document.getElementById('btnFit').addEventListener('click',     () => { if(graphData) fitView(simulation?.nodes()||[]); });
+document.getElementById('btnReset').addEventListener('click',   () => {
+  if (simulation) { simulation.alpha(1).restart(); setTimeout(()=>fitView(simulation.nodes()||[]),900); }
+});
+
+function fitView(nodes) {
+  if (!nodes.length) return;
+  const W = canvasWrap.clientWidth, H = canvasWrap.clientHeight;
+  let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity;
+  nodes.forEach(n => { x0=Math.min(x0,n.x);y0=Math.min(y0,n.y);x1=Math.max(x1,n.x);y1=Math.max(y1,n.y); });
+  const pad=60, s=Math.min(.95,(W-pad*2)/Math.max(x1-x0,1),(H-pad*2)/Math.max(y1-y0,1));
+  const tx = W/2 - s*(x0+x1)/2, ty = H/2 - s*(y0+y1)/2;
+  svg.transition().duration(600).ease(d3.easeCubicOut)
+    .call(zoomBeh.transform, d3.zoomIdentity.translate(tx,ty).scale(s));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+# config.yaml — Pipeline Hyperparameters
+# Single source of truth for all scripts. Pass via --config flag.
+
+# ── Data ────────────────────────────────────────────────────────────────────
+data:
+  raw_dir:      data/raw/          # Original SPICE netlists (.sp)
+  parsed_dir:   data/parsed/       # Parser output JSONs
+  dataset_dir:  data/dataset/      # Extracted .pt subgraph files
+  train_split:  0.7
+  val_split:    0.15
+  test_split:   0.15
+
+# ── Subgraph Extraction ──────────────────────────────────────────────────────
+extractor:
+  k_hops:             3            # Receptive field depth
+  # Ratio of negative to positive examples sampled per circuit.
+  # ISCAS '85 circuits have severe class imbalance — keep this at 3:1 or lower
+  # to avoid the model collapsing to always predicting 0.
+  neg_pos_ratio:      3
+  seed:               42
+
+# ── Model ────────────────────────────────────────────────────────────────────
+model:
+  in_channels:        5            # One-hot node types (VDD, GND, Sig, PMOS, NMOS)
+  hidden_channels:    64
+  num_relations:      22           # Static pipeline constant — do NOT change
+  num_bases:          8
+
+# ── Training ─────────────────────────────────────────────────────────────────
+training:
+  epochs:             50
+  batch_size:         64
+  learning_rate:      0.001
+  weight_decay:       0.0001       # L2 regularisation on top of dropout
+  # pos_weight: computed dynamically from dataset stats in train.py
+  # (negative_count / positive_count)
+
+# ── Inference ────────────────────────────────────────────────────────────────
+inference:
+  vf3_threshold:      0.95         # Minimum probability to pass subgraph to VF3
+  checkpoint:         checkpoints/best_model.pt

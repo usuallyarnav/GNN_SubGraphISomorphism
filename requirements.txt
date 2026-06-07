@@ -1,0 +1,7 @@
+torch>=2.0.0
+torch-geometric>=2.3.0
+networkx>=3.0
+pandas
+numpy
+tqdm
+PyYAML>=6.0
