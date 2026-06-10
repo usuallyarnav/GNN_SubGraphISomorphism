@@ -6,7 +6,7 @@ from pathlib import Path
 import torch
 import torch.nn.functional as F
 from torch_geometric.data import Data
-from torch_geometric.utils import coalesce
+
 
 # ── Project layout ────────────────────────────────────────────────────────────
 # src/data_loader.py  →  parent = src/  →  parent.parent = circuit_gnn_project/
@@ -74,8 +74,13 @@ def load_circuit_graph(json_path: str) -> Data:
         assert edge_type.max().item() < NUM_RELATIONS, \
             f"Edge type exceeds pipeline maximum of {NUM_RELATIONS - 1}"
 
-    # Coalesce: sorts edges and removes duplicates — crucial for RGCN efficiency.
-    edge_index, edge_type = coalesce(edge_index, edge_type, num_nodes=num_nodes)
+    # NOTE: coalesce(reduce="min") was removed.
+    # It treated (src, dst) as the edge identity and silently dropped parallel edges
+    # with different edge_type values — exactly what a diode-connected transistor
+    # produces (drain==gate → same net, types 4 and 5 for NMOS, 0 and 1 for PMOS).
+    # RGCNConv processes edges per-relation independently; it is a native multigraph
+    # operator and requires no deduplication. The parser never emits true duplicates
+    # (same src, dst, AND type), so coalesce provided no correctness benefit here.
 
     # ── 4. Graph Construction ────────────────────────────────────────────────
     pyg_graph = Data(x=x, edge_index=edge_index, edge_type=edge_type)

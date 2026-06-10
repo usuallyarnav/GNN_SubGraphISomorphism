@@ -90,7 +90,7 @@ _W_PAT = re.compile(r'(?<!\w)w\s*=\s*([\d\.eE\+\-]+[a-zA-Z]*)', re.IGNORECASE)
 _L_PAT = re.compile(r'(?<!\w)l\s*=\s*([\d\.eE\+\-]+[a-zA-Z]*)', re.IGNORECASE)
 _PDK_PAT = re.compile(r'(?<=\d)([pn])(?=\d|\b)', re.IGNORECASE)
 _MOS_PAT = re.compile(
-    r'^m(\w+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)',
+    r'^m(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)',
     re.IGNORECASE,
 )
 
@@ -119,6 +119,60 @@ def _resolve_logical_lines(raw_text: str):
     if current:
         logical_lines.append(current)
     return logical_lines
+
+
+def split_library_into_subckts(raw_text: str) -> dict:
+    """
+    Split a shared SPICE library into one self-contained text block per .SUBCKT.
+    Used for the TARGET gate library; each block keeps its own .SUBCKT/.ENDS wrapper
+    so the normal parser yields a single connected gate graph. Nested subckts are
+    rejected (gate templates are expected to be flat transistor netlists).
+    Returns {subckt_name: block_text}.
+    """
+    blocks = {}
+    current_name = None
+    depth = 0
+    for line in _resolve_logical_lines(raw_text):
+        low = line.lower()
+        if low.startswith('.subckt'):
+            depth += 1
+            if depth > 1:
+                raise ValueError(
+                    "Nested .SUBCKT in target library — flatten gate templates first."
+                )
+            parts = line.split()
+            current_name = parts[1] if len(parts) > 1 else "UNNAMED"
+            blocks[current_name] = [line]
+        elif low.startswith('.ends'):
+            depth = max(0, depth - 1)
+            if current_name is not None:
+                blocks[current_name].append(line)
+            current_name = None
+        elif current_name is not None:
+            blocks[current_name].append(line)
+    return {name: "\n".join(lines) for name, lines in blocks.items()}
+
+
+def parse_target_library(library_path: Path, out_dir: Path) -> list:
+    """
+    Parse every .SUBCKT in a gate library into its own <name>.json under out_dir.
+    These JSONs are the target graphs G_T the extractor/model condition on.
+    """
+    with open(library_path, 'r') as f:
+        text = f.read()
+    blocks = split_library_into_subckts(text)
+    if not blocks:
+        print(f"[ERROR] No .SUBCKT blocks found in '{library_path}'")
+        sys.exit(1)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    written = []
+    for name, block_text in blocks.items():
+        parse_spice_to_heterogeneous_graph(block_text, str(out_dir / f"{name}.json"))
+        written.append(name)
+    print(f"\n  Parsed {len(written)} target gate(s) -> {out_dir}")
+    print(f"  Targets: {', '.join(written)}\n")
+    return written
+
 
 
 def parse_spice_to_heterogeneous_graph(
@@ -351,28 +405,40 @@ def parse_spice_to_heterogeneous_graph(
 
 
 if __name__ == "__main__":
-    # Usage A — explicit paths (still supported):
-    #   python src/parser.py data/raw/C432.sp data/parsed/C432.json
-    #
-    # Usage B — stem only (paths resolved automatically):
-    #   python src/parser.py C432
-    #   reads  → data/raw/C432.sp
-    #   writes → data/parsed/C432.json
+    import argparse
 
-    if len(sys.argv) < 2:
+    ap = argparse.ArgumentParser(description="Parse SPICE netlists into graph JSONs")
+    ap.add_argument("stem", nargs="?", help="entire-circuit stem or input.sp path")
+    ap.add_argument("output", nargs="?", help="explicit output.json path (optional)")
+    ap.add_argument("--library", help="parse a .SUBCKT gate library into per-gate target JSONs")
+    ap.add_argument("--targets-dir", default=None,
+                    help="output dir for --library targets (default: data/parsed/targets)")
+    args = ap.parse_args()
+
+    # ── Target library mode ───────────────────────────────────────────────────
+    if args.library:
+        lib_path = Path(args.library)
+        if not lib_path.is_file():
+            print(f"[ERROR] Library file not found: '{lib_path}'")
+            sys.exit(1)
+        targets_dir = Path(args.targets_dir) if args.targets_dir else (PARSED_DIR / "targets")
+        parse_target_library(lib_path, targets_dir)
+        sys.exit(0)
+
+    # ── Entire-circuit mode (original behaviour) ──────────────────────────────
+    if not args.stem:
         print("Usage: python src/parser.py <stem>")
         print("       python src/parser.py <input.sp> <output.json>")
+        print("       python src/parser.py --library <gates.sp> [--targets-dir DIR]")
         sys.exit(1)
 
-    if len(sys.argv) == 2:
-        # Stem mode: derive both paths from the single argument
-        stem        = Path(sys.argv[1]).stem          # "C432.sp" → "C432"
+    if args.output is None:
+        stem        = Path(args.stem).stem
         input_file  = RAW_DIR    / f"{stem}.sp"
         output_file = PARSED_DIR / f"{stem}.json"
     else:
-        # Explicit mode: accept raw paths but still normalise through Path
-        input_file  = Path(sys.argv[1])
-        output_file = Path(sys.argv[2])
+        input_file  = Path(args.stem)
+        output_file = Path(args.output)
 
     if not input_file.is_file():
         print(f"[ERROR] Input file not found: '{input_file}'")

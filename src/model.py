@@ -2,146 +2,150 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from pathlib import Path
-from torch_geometric.nn import RGCNConv, global_mean_pool
-from torch_geometric.data import Data
+from torch_geometric.nn import RGCNConv, global_add_pool
+from torch_geometric.data import Data, Batch
 
 # ── Project layout ────────────────────────────────────────────────────────────
-# src/model.py  →  parent = src/  →  parent.parent = circuit_gnn_project/
-_SRC_DIR     = Path(__file__).resolve().parent          # .../circuit_gnn_project/src
-_PROJECT_DIR = _SRC_DIR.parent                          # .../circuit_gnn_project
-
-# model.py has no direct file I/O, but _PROJECT_DIR is defined here so that
-# train.py can import it via:  from model import _PROJECT_DIR
+_SRC_DIR     = Path(__file__).resolve().parent
+_PROJECT_DIR = _SRC_DIR.parent
 CHECKPOINTS_DIR = _PROJECT_DIR / "checkpoints"          # train.py saves weights here
 
 
 class CircuitFilterGNN(nn.Module):
-    def __init__(self, in_channels=5, hidden_channels=64, num_relations=22, num_bases=8):
+    def __init__(self, in_channels=5, hidden_channels=128, num_relations=22,
+                 num_bases=8, num_layers=2):
         """
-        K-Hop Binary Classifier for VF3 Pre-Filtering.
+        Target-conditioned K-hop classifier (paper Sec III-C).
+
+        The model embeds BOTH a candidate K-hop region and a target gate with the
+        SAME shared RGCN, then predicts whether the candidate contains the target:
+
+            p̂ = MLP( [ h_K-hop ; h_target ] )                     (paper Eq. 10)
+
+        where each graph embedding concatenates the pooled node embeddings from
+        every hop l = 0..L (paper Eq. 7 / 9):
+
+            h_graph = Concat( pool(h^(0)), pool(h^(1)), ..., pool(h^(L)) )
+
+        Pool(·) is SUM pooling (paper Eq. 6). h^(0) is the raw one-hot node feature,
+        so the per-graph embedding width is  in_channels + num_layers * hidden.
 
         Args:
-            in_channels:      5  — one-hot node types: VDD, GND, Signal, PMOS, NMOS
-            hidden_channels:  64 — embedding dimension (override via config for tuning)
-            num_relations:    22 — static pipeline constant (forward 0-7, reverse 14-21)
-            num_bases:         8 — basis decomposition to keep parameter count low
+            in_channels:     5   — one-hot node types: VDD, GND, Signal, PMOS, NMOS
+            hidden_channels: 128 — RGCN embedding width
+            num_relations:   22  — static pipeline constant (forward 0-7, reverse 14-21)
+            num_bases:        8  — basis decomposition (paper Eq. 4)
+            num_layers:       2  — L in the paper (Evaluation Protocol sets L=2)
 
-        All four hyperparameters are constructor arguments so train.py can drive
-        them from configs/config.yaml without touching this file.
+        NOTE on efficiency: the paper runs the GNN once over the whole circuit and
+        samples per-hop subgraph embeddings with boundary exclusion (Sec III-C2) as a
+        SPEED optimisation. Here each candidate is already a self-contained extracted
+        subgraph, so we run the GNN per candidate and sum-pool its nodes at each hop.
+        This is the paper's "w/o our subgraph embedding extraction" setting — same
+        learned quantity, simpler and slower. Swap in the sampling trick later if
+        extraction time becomes the bottleneck.
         """
-        super(CircuitFilterGNN, self).__init__()
+        super().__init__()
+        self.num_layers = num_layers
 
-        # ── 1. Structural Encoding (RGCN Layers) ─────────────────────────────
-        self.conv1 = RGCNConv(in_channels, hidden_channels, num_relations, num_bases=num_bases)
-        self.bn1   = nn.BatchNorm1d(hidden_channels)
+        # ── Shared RGCN tower (paper Eq. 3 with basis decomposition Eq. 4) ──────
+        self.convs = nn.ModuleList()
+        self.bns   = nn.ModuleList()
+        prev = in_channels
+        for _ in range(num_layers):
+            self.convs.append(RGCNConv(prev, hidden_channels, num_relations, num_bases=num_bases))
+            self.bns.append(nn.BatchNorm1d(hidden_channels))
+            prev = hidden_channels
 
-        self.conv2 = RGCNConv(hidden_channels, hidden_channels, num_relations, num_bases=num_bases)
-        self.bn2   = nn.BatchNorm1d(hidden_channels)
+        # Per-graph embedding width: pooled h^(0)(=x) ++ pooled h^(1..L)
+        self._graph_dim = in_channels + num_layers * hidden_channels
+        concat_dim      = 2 * self._graph_dim          # [h_K-hop ; h_target]
 
-        # NOTE: Conv dropout uses F.dropout in forward() intentionally.
-        # F.dropout reads self.training at call time, which correctly handles
-        # predict() temporarily switching to eval mode mid-training loop.
-        # Do not replace with nn.Dropout modules here.
-
-        # ── 2. Output Head (MLP) ─────────────────────────────────────────────
+        # ── Output head (MLP) ───────────────────────────────────────────────────
         self.mlp = nn.Sequential(
-            nn.Linear(hidden_channels, hidden_channels // 2),
+            nn.Linear(concat_dim, hidden_channels),
             nn.ReLU(),
-            nn.Dropout(p=0.5),          # standard rate post-pooling
-            nn.Linear(hidden_channels // 2, 1),
+            nn.Dropout(p=0.5),
+            nn.Linear(hidden_channels, 1),
         )
 
-    def forward(self, data):
+    def encode(self, data) -> torch.Tensor:
         """
-        Args:
-            data: PyG Data object with x, edge_index, edge_type, batch.
-
-        Returns:
-            Raw logits [batch_size, 1].
-            Use BCEWithLogitsLoss during training.
-            Use predict() for inference — never apply sigmoid here.
-
-        NOTE: Call model.eval() before inference to freeze BatchNorm running stats.
+        Embed one batched graph. Returns [num_graphs, in_channels + L*hidden]:
+        the all-hop concatenation of SUM-pooled node embeddings (paper Eq. 6/7).
         """
         x, edge_index, edge_type, batch = (
             data.x, data.edge_index, data.edge_type, data.batch
         )
 
-        # Guard against malformed subgraphs from the extraction pipeline
-        assert x.shape[0] == batch.shape[0], (
-            f"Node count mismatch: x has {x.shape[0]} nodes, "
-            f"batch has {batch.shape[0]} entries"
-        )
+        # h^(0) = x  (paper Eq. 2) — pooled as the 0-hop graph embedding
+        hop_pools = [global_add_pool(x, batch)]
 
-        # Layer 1
-        x = self.conv1(x, edge_index, edge_type)
-        x = self.bn1(x)
-        x = F.relu(x)
-        # F.dropout respects self.training automatically — no shared module state
-        x = F.dropout(x, p=0.3, training=self.training)
+        h = x
+        for conv, bn in zip(self.convs, self.bns):
+            h = conv(h, edge_index, edge_type)
+            h = bn(h)
+            h = F.relu(h)
+            h = F.dropout(h, p=0.3, training=self.training)
+            hop_pools.append(global_add_pool(h, batch))
 
-        # Layer 2
-        x = self.conv2(x, edge_index, edge_type)
-        x = self.bn2(x)
-        x = F.relu(x)
-        x = F.dropout(x, p=0.3, training=self.training)
+        return torch.cat(hop_pools, dim=1)              # [num_graphs, graph_dim]
 
-        # Pooling & MLP
-        x = global_mean_pool(x, batch)
-        return self.mlp(x)
+    def forward(self, candidate, target) -> torch.Tensor:
+        """
+        Args:
+            candidate: batched PyG Data — the K-hop regions under test.
+            target:    batched PyG Data — the gate to look for, aligned 1:1 with
+                       candidate (same number of graphs, same order).
+
+        Returns raw logits [num_graphs, 1]. Use BCEWithLogitsLoss in training;
+        use predict() for probabilities. Never apply sigmoid here.
+        """
+        h_cand = self.encode(candidate)
+        h_tgt  = self.encode(target)
+        h      = torch.cat([h_cand, h_tgt], dim=1)
+        return self.mlp(h)
 
     @torch.no_grad()
-    def predict(self, data) -> torch.Tensor:
-        """
-        Inference-only. Returns sigmoid probability in [0, 1].
-        Safe to call mid-training loop — restores model mode on exit.
-        Apply the VF3_FILTER_THRESHOLD (0.95) against this output, not forward().
-        """
+    def predict(self, candidate, target) -> torch.Tensor:
+        """Inference-only sigmoid probability in [0, 1]. Restores train mode on exit."""
         was_training = self.training
         self.eval()
-        result = torch.sigmoid(self.forward(data))
+        out = torch.sigmoid(self.forward(candidate, target))
         if was_training:
             self.train()
-        return result
+        return out
 
 
 if __name__ == "__main__":
     model = CircuitFilterGNN()
-
     sep = "─" * 52
-    print(f"\n{sep}")
-    print(f"  CircuitFilterGNN  —  model.py")
-    print(sep)
+    print(f"\n{sep}\n  CircuitFilterGNN — target-conditioned (model.py)\n{sep}")
+    total = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    print(f"  Trainable params : {total:,}")
+    print(f"  Layers (L)       : {model.num_layers}")
+    print(f"  Per-graph dim    : {model._graph_dim}")
+    print(f"  MLP input dim    : {2 * model._graph_dim}  ([h_K-hop ; h_target])")
 
-    total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f"  Total Trainable Parameters: {total_params:,}")
-    print(f"  Conv dropout  : p=0.3  (F.dropout, training-aware)")
-    print(f"  MLP  dropout  : p=0.5  (post-pooling)")
-    print(f"  Checkpoints   : {CHECKPOINTS_DIR}")
-    print(sep)
+    def fake(nnodes):
+        d = Data(
+            x=torch.randn(nnodes, 5),
+            edge_index=torch.randint(0, nnodes, (2, nnodes * 2)),
+            edge_type=torch.randint(0, 22, (nnodes * 2,)),
+        )
+        d.num_nodes = nnodes
+        return d
 
-    # ── Smoke Test ────────────────────────────────────────────────────────────
-    # Random features so BatchNorm sees nonzero variance and activations are live
-    fake_data = Data(
-        x=torch.randn(6, 5),
-        edge_index=torch.tensor([[0, 1, 2, 3], [1, 2, 3, 4]]),
-        edge_type=torch.tensor([0, 1, 4, 5]),
-        batch=torch.zeros(6, dtype=torch.long),
-    )
+    cand = Batch.from_data_list([fake(6), fake(8)])
+    tgt  = Batch.from_data_list([fake(4), fake(4)])
 
-    # Training path
     model.train()
-    out_train = model(fake_data)
-    assert out_train.shape == (1, 1), f"Unexpected train shape: {out_train.shape}"
-    print(f"  Train pass OK  —  logit      : {out_train.item():+.4f}")
+    out = model(cand, tgt)
+    assert out.shape == (2, 1), out.shape
+    print(f"  Train pass OK    : logits {out.squeeze().tolist()}")
 
-    # Inference path — predict() must restore training mode on exit
-    out_prob = model.predict(fake_data)
-    assert out_prob.shape == (1, 1), f"Unexpected eval shape: {out_prob.shape}"
-    assert 0.0 <= out_prob.item() <= 1.0, "Probability out of [0, 1]"
-    print(f"  Eval  pass OK  —  probability: {out_prob.item():.4f}")
-
-    # Confirm model state was restored after predict()
+    prob = model.predict(cand, tgt)
+    assert prob.shape == (2, 1) and (0 <= prob).all() and (prob <= 1).all()
     assert model.training, "predict() failed to restore training mode"
-    print(f"  State restored —  model.training: {model.training}")
+    print(f"  Eval  pass OK    : probs  {[round(p,4) for p in prob.squeeze().tolist()]}")
     print(f"{sep}\n")

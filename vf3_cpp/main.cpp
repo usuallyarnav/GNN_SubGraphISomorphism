@@ -1918,6 +1918,11 @@ static void generate(const spice::Netlist& lib,
                     if(i+1<inst.ports.size()) out<<", ";
                 }
             out<<");\n";
+            // Sidecar for downstream label generation: exact source FET membership
+            // of this matched instance. Parsed by the Python extractor.
+            out<<"\t// MATCH "<<inst.gate_type;
+            for(size_t fi : inst.global_fets) out<<" "<<target.fets[fi].name;
+            out<<"\n";
         }
         out<<"endmodule\n\n";
 
